@@ -13,6 +13,7 @@ The working title on the site is **Git Together**.
 | Snapshot of both tabs, Oct 1 2026 | `docs/study-plan.md`, `docs/step-text.md` |
 | Website design (in progress, not final) | [Claude Design project](https://claude.ai/design/p/e30d20a1-9bcd-46d6-b163-74b385f19700?file=Git+Tutorial.dc.html) |
 | Snapshot of the design and its imports | `design/Git Tutorial.dc.html`, `design/support.js`, `design/_ds/broadsheet.../` |
+| Website app (Angular, Optimus UI, Tailwind) | `src/` |
 | Rules for Claude | `CLAUDE.md` |
 
 The doc is the live version. The files in `docs/` are a snapshot. If they disagree, the doc wins. Refresh the snapshot when the doc changes.
@@ -114,6 +115,19 @@ Lesson 1 in `docs/step-text.md` is the template. Every other lesson should match
 2. Rewrite lesson 2 in the same format and voice as lesson 1.
 3. Keep going one lesson at a time through lesson 12.
 4. Feed the finished text into the design's `STEPS` data.
+
+## Running the site
+
+The site is an Angular app in `src/`. It uses [Optimus UI](https://optimus.openng.org/) for its components and [Tailwind CSS](https://tailwindcss.com/) v4 for layout and spacing. The Optimus Tailwind plugin adds theme colors like `bg-primary` as Tailwind classes. Run these commands from the `src` folder.
+
+```bash
+npm install      # first time only
+npx ng serve     # dev server at http://localhost:4200
+npx ng build     # production build in dist/
+npx ng test      # unit tests with Vitest
+```
+
+Code uses 4 spaces for indents. Prettier and `.editorconfig` in `src/` already follow that.
 
 ## Starting a new Claude session
 

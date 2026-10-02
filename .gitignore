@@ -1,0 +1,42 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Editors and IDEs
+.vscode/
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.swp
+.history/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Angular app build output and caches
+/src/dist/
+/src/tmp/
+/src/out-tsc/
+/src/bazel-out/
+/src/.angular/
+/src/coverage/
+.sass-cache/
+/src/connect.lock
+/src/libpeerconnection.log
+testem.log
+/src/typings/
+__screenshots__/
