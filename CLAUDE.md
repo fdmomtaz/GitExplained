@@ -6,11 +6,22 @@ Project context is in README.md. Read it first.
 
 ## What this repo is
 
-A writing project, not a software project. There is no build, lint, or test step. The work is lesson text in Markdown plus a read only snapshot of the website design.
+Mostly a writing project. The main work is lesson text in Markdown plus a read only snapshot of the website design. The repo also holds the website app in `src/`, which is in its early stages.
 
 - `docs/study-plan.md` holds the curriculum, lesson outlines, and open questions. `docs/step-text.md` holds the panel text, step by step.
 - Both are snapshots of tabs in the live Claude Doc (link in README). The doc wins when they disagree. Edit the doc with the Claude Docs tools, then refresh the matching file in `docs/`.
 - `design/` is a snapshot of the Claude Design project. Don't edit it. Read it to learn what the text must fit.
+- `src/` is the Angular app (`git-explained`). The lesson text has no build step, but the app does.
+
+## The app in `src/`
+
+- Angular 22, standalone and zoneless. Optimus UI for components, with the Aura preset set in `src/src/app/app.config.ts`. Tailwind CSS v4 with `@openng/optimus-ui-tailwindcss` for layout, spacing, and theme colors (`bg-primary`, `text-surface-500`).
+- Optimus is a PrimeNG fork with the same API. Import from `@openng/optimus-ui/<component>` (for example `ButtonModule` from `@openng/optimus-ui/button`). Don't install `primeng` or `@primeuix/*`.
+- Optimus styles live in the `optimus` CSS layer, ordered `theme, base, optimus`, so Tailwind utilities override component styles. Keep that order if you touch `provideOptimus`.
+- Run npm and `ng` commands from `src/` (`npx ng serve`, `npx ng build`, `npx ng test`). Run `npx ng build` after changes to confirm the app still compiles.
+- Indent with 4 spaces. `.editorconfig` and `.prettierrc` in `src/` enforce it, so run `npx prettier --write` on files you touch.
+- Keep one `.gitignore` at the repo root and one `README.md` at the root. Don't add them inside `src/`. When `ng` or a schematic creates one, merge it into the root file and delete it.
+- npm 12 blocks fetching remote tarballs, so `npm install --package-lock-only` fails. A plain `npm install` works.
 
 ## How the text plugs into the design
 
@@ -23,7 +34,7 @@ A writing project, not a software project. There is no build, lint, or test step
 
 ## Your job on this project
 
-- You write the curriculum and the lesson text. Visual design is done separately in Claude Design. Don't focus on design unless asked.
+- You write the curriculum and the lesson text. Visual design is done separately in Claude Design. Don't focus on design unless asked. Work on the app only when asked.
 - Teach Git **concepts**, not the command line or any tool. Real commands only go in the More details box.
 - Audience: absolute beginners and non developers with short attention spans. One idea per step, about 40 words of body text.
 - Don't talk about "your computer" or "Sam's computer". The workspace already shows local and origin. Teammates' snapshots just appear on origin.
