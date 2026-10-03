@@ -1,2 +1,21 @@
 @import 'tailwindcss';
 @import '@openng/optimus-ui-tailwindcss';
+
+/* Broadsheet type, see app/theme/broadsheet.ts for the colors. */
+@theme {
+    --font-sans: 'Source Serif 4', system-ui, serif;
+}
+
+@layer base {
+    h1 {
+        @apply text-6xl leading-none font-semibold tracking-tight text-balance lg:text-8xl;
+    }
+    h2 {
+        @apply text-5xl leading-none font-semibold tracking-tight text-balance;
+    }
+}
+
+/* The small blue label above a section. */
+@utility kicker {
+    @apply text-sm font-semibold tracking-widest text-primary-700 uppercase;
+}

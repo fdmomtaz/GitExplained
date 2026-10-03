@@ -2,7 +2,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideOptimus } from '@openng/optimus-ui/config';
-import Aura from '@openng/optimus-ui-themes/aura';
+import { Broadsheet } from './theme/broadsheet';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -10,7 +10,7 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes),
         provideOptimus({
             theme: {
-                preset: Aura,
+                preset: Broadsheet,
                 options: {
                     cssLayer: { name: 'optimus', order: 'theme, base, optimus' },
                 },

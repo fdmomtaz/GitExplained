@@ -1,12 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SiteNav } from './components/site-nav/site-nav';
 
 @Component({
-    imports: [RouterOutlet],
+    imports: [RouterOutlet, SiteNav],
     selector: 'app-root',
-    styleUrl: './app.css',
     templateUrl: './app.html',
 })
-export class App {
-    protected readonly title = signal('git-explained');
-}
+export class App {}

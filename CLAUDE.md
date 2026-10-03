@@ -25,7 +25,8 @@ Mostly a writing project. The main work is lesson text in Markdown plus a read o
 
 ## How the text plugs into the design
 
-- `design/Git Tutorial.dc.html` defines a `STEPS` array. Each step is `{ title, action, target, body: [paragraph, paragraph], task, doneMsg }`. `body` is a list of paragraphs, so write one or two separate paragraphs, not one block.
+- `design/Git Tutorial Final.dc.html` is the current design for the app (landing, lesson, Lessons, Glossary, About). Copy its layout and styling, not its content. Lesson data comes from `LessonService`. Refresh it from the Claude Design project when the design changes.
+- `design/Git Tutorial.dc.html` is the older draft. It defines a `STEPS` array. Each step is `{ title, action, target, body: [paragraph, paragraph], task, doneMsg }`. `body` is a list of paragraphs, so write one or two separate paragraphs, not one block.
 - `action` and `target` drive the self check (for example `action: 'stage', target: 'notes.txt'`). The **Check** line in `docs/step-text.md` should map to an action on a file.
 - `fill()` replaces any `{name}` with metaphor text from `SETS` (plain, photo, shipping, desk). Only `{at0}` to `{at3}` and `{T3}` are safe in lesson text. Any other curly brace word breaks. A token must read naturally in all four metaphors ("on the shelf", "in the warehouse").
 - The design's `BTNS` only has Edit, Stage, Unstage, Commit, and Push. The intro of `docs/step-text.md` lists the extra buttons the lessons need. Use those exact names in tasks.

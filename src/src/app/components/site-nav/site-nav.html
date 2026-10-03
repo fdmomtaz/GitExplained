@@ -1,0 +1,21 @@
+<nav class="flex flex-wrap items-center gap-5 py-5 text-sm">
+    <a routerLink="/" class="mr-auto text-lg font-semibold">Git Explained</a>
+    <a routerLink="/lessons" routerLinkActive="font-semibold" class="hover:text-primary">Lessons</a>
+    <a routerLink="/glossary" routerLinkActive="font-semibold" class="hover:text-primary">
+        Glossary
+    </a>
+    <a routerLink="/about" routerLinkActive="font-semibold" class="hover:text-primary">About</a>
+    <a
+        href="https://github.com/fdmomtaz/GitExplained"
+        target="_blank"
+        rel="noopener"
+        class="hover:text-primary"
+    >
+        Source on GitHub
+    </a>
+    <a
+        pButton
+        [routerLink]="['/lessons', next().id]"
+        [label]="started() ? 'Continue lesson ' + next().number : 'Start learning'"
+    ></a>
+</nav>

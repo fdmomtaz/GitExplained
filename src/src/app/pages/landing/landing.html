@@ -1,0 +1,140 @@
+<div
+    class="mt-1 flex flex-wrap gap-x-10 border-t-3 border-b py-2 text-xs tracking-widest uppercase"
+>
+    <span>A free course</span>
+    <span>{{ lessons.length }} short lessons</span>
+    <span>No command line</span>
+    <span>No code</span>
+</div>
+
+<section class="grid items-start gap-20 pt-16 lg:grid-cols-5">
+    <div class="flex flex-col gap-5 lg:col-span-3">
+        <h1>Git, explained for everyone.</h1>
+        <p class="max-w-xl text-xl text-pretty">
+            Git has a reputation for being hard. It isn't. It just never had a good teacher.
+        </p>
+        <p class="max-w-xl text-xl text-pretty">
+            Every lesson takes about five minutes, and you can't break anything here. Click around,
+            make mistakes, and press Reset step whenever you like.
+        </p>
+        <div class="mt-2 flex gap-2">
+            <a
+                pButton
+                size="large"
+                [routerLink]="['/lessons', lessons[0].id]"
+                label="Start lesson 1"
+            ></a>
+            @if (inProgress(); as lesson) {
+                <a
+                    pButton
+                    size="large"
+                    severity="secondary"
+                    outlined
+                    [routerLink]="['/lessons', lesson.id]"
+                    [label]="'Continue lesson ' + lesson.number"
+                ></a>
+            }
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-4 pt-2.5 lg:col-span-2">
+        <p class="kicker">Made for people like you</p>
+        <div class="grid grid-cols-3 gap-4 py-2.5">
+            <div class="text-2xl leading-tight font-semibold">Writers</div>
+            <div class="col-span-2">who keep drafts called final and final 2.</div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 py-2.5">
+            <div class="text-2xl leading-tight font-semibold">Designers</div>
+            <div class="col-span-2">who hand files back and forth with a team.</div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 py-2.5">
+            <div class="text-2xl leading-tight font-semibold">Vibe coders</div>
+            <div class="col-span-2">
+                who build apps with AI and want to know what Git is doing for them.
+            </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 py-2.5">
+            <div class="text-2xl leading-tight font-semibold">Anyone</div>
+            <div class="col-span-2">who has ever lost an hour of work.</div>
+        </div>
+    </div>
+</section>
+
+<section class="grid gap-12 py-16 lg:grid-cols-5">
+    <div class="flex items-end gap-4">
+        <app-plate-number class="text-8xl font-semibold" [value]="lessons.length" />
+        <div class="pb-2 text-lg leading-tight">lessons,<br />about 5 min each</div>
+    </div>
+
+    <div class="grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-4">
+        @for (lesson of lessons; track lesson.id) {
+            <a
+                [routerLink]="['/lessons', lesson.id]"
+                class="flex flex-col gap-0.5 hover:text-primary"
+            >
+                <span class="text-xs text-muted-color">
+                    Lesson {{ lesson.number }} · {{ lesson.minutes }} min
+                </span>
+                <span class="text-lg leading-tight font-semibold">{{ lesson.title }}</span>
+                <span
+                    class="text-sm"
+                    [class]="
+                        progress.state(lesson) !== 'notStarted'
+                            ? 'text-primary-700'
+                            : 'text-muted-color'
+                    "
+                >
+                    {{ progress.label(lesson) }}
+                </span>
+            </a>
+        }
+    </div>
+</section>
+
+<section class="grid items-start gap-20 py-28 lg:grid-cols-3">
+    <h2>By the end of this course <em class="font-normal">you can</em></h2>
+    <div class="grid gap-x-16 gap-y-8 pt-2 sm:grid-cols-2 lg:col-span-2">
+        <div class="flex flex-col gap-1">
+            <p class="text-xl leading-snug text-pretty">
+                <strong class="font-semibold">Explain</strong> what a repository is and where your
+                work lives.
+            </p>
+            <span class="text-sm text-primary-700">Lesson 1</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <p class="text-xl leading-snug text-pretty">
+                <strong class="font-semibold">Choose</strong> which changes go into a snapshot, and
+                save it.
+            </p>
+            <span class="text-sm text-primary-700">Lessons 2 and 3</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <p class="text-xl leading-snug text-pretty">
+                <strong class="font-semibold">Undo</strong> a change safely after looking back
+                through history.
+            </p>
+            <span class="text-sm text-primary-700">Lesson 4</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <p class="text-xl leading-snug text-pretty">
+                <strong class="font-semibold">Send</strong> your work to origin and bring other
+                people's changes back.
+            </p>
+            <span class="text-sm text-primary-700">Lessons 5 and 6</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <p class="text-xl leading-snug text-pretty">
+                <strong class="font-semibold">Branch</strong> off to try an idea, then merge it back
+                when it works.
+            </p>
+            <span class="text-sm text-primary-700">Lessons 7 to 9</span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <p class="text-xl leading-snug text-pretty">
+                <strong class="font-semibold">Review</strong> and undo what an AI coding tool
+                changed in your project.
+            </p>
+            <span class="text-sm text-primary-700">Lessons 2 and 4</span>
+        </div>
+    </div>
+</section>

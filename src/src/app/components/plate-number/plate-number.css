@@ -1,0 +1,35 @@
+/* The plate numeral from the Broadsheet design system: the number printed as three
+   process plates a little out of register. Copied from design/_ds/broadsheet.../styles.css. */
+.cmyk-num {
+    --magenta: #d6006c;
+    --process-yellow: #edbb00;
+    position: relative;
+    width: fit-content;
+    line-height: 0.9;
+    background: var(--p-surface-0);
+    padding: 0.12em;
+    margin: -0.12em;
+}
+.cmyk-num .paper {
+    color: var(--p-surface-0);
+    text-shadow:
+        0.036em 0.025em 0 var(--p-surface-0),
+        -0.031em -0.023em 0 var(--p-surface-0);
+}
+.cmyk-num .plate {
+    position: absolute;
+    inset: 0.12em;
+    mix-blend-mode: multiply;
+    text-box: trim-both cap alphabetic;
+}
+.cmyk-num .plate-c {
+    color: var(--p-primary-color);
+}
+.cmyk-num .plate-m {
+    color: var(--magenta);
+    translate: 0.036em 0.025em;
+}
+.cmyk-num .plate-y {
+    color: var(--process-yellow);
+    translate: -0.031em -0.023em;
+}

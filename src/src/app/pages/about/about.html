@@ -1,0 +1,131 @@
+<section class="flex flex-col gap-5 pt-16">
+    <h1>About Git Explained</h1>
+    <div class="flex max-w-2xl flex-col gap-4 text-xl text-pretty">
+        <p>
+            Git Explained is a free course for people who need to use Git but don't write code, or
+            are only starting to. It teaches the ideas behind Git by letting you do them in the
+            browser.
+        </p>
+        <p>There's nothing to install and no account to create.</p>
+    </div>
+</section>
+
+<section class="grid items-start gap-20 pt-28 lg:grid-cols-3">
+    <h2>How a lesson works</h2>
+    <div class="grid gap-12 pt-2 sm:grid-cols-3 lg:col-span-2">
+        <div class="flex flex-col gap-2">
+            <span class="text-2xl font-semibold">Short</span>
+            <p class="text-lg text-pretty">
+                Each lesson takes about five minutes and has a few short steps. Stop after any step
+                and pick up where you left off.
+            </p>
+        </div>
+        <div class="flex flex-col gap-2">
+            <span class="text-2xl font-semibold">Hands on</span>
+            <p class="text-lg text-pretty">
+                Every step gives you one task. You press the button it asks for and watch which
+                files move, and where to.
+            </p>
+        </div>
+        <div class="flex flex-col gap-2">
+            <span class="text-2xl font-semibold">Plain words first</span>
+            <p class="text-lg text-pretty">
+                Places and actions use everyday names, with the Git term beside each one. The
+                glossary lists them all.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="grid items-start gap-20 pt-28 lg:grid-cols-3">
+    <h2>What it <em class="font-normal">leaves out</em></h2>
+    <p class="max-w-2xl pt-2 text-xl text-pretty lg:col-span-2">
+        Typing Git commands, setting Git up on your computer, and advanced topics such as rebasing.
+        When you're ready for those, the
+        <a href="https://git-scm.com/doc" class="text-primary underline"
+            >official Git documentation</a
+        >
+        picks up where this course stops.
+    </p>
+</section>
+
+<section class="grid items-start gap-20 pt-28 lg:grid-cols-3">
+    <h2>Questions</h2>
+    <div class="flex max-w-2xl flex-col gap-8 pt-2 lg:col-span-2">
+        <div class="flex flex-col gap-1">
+            <span class="text-2xl font-semibold">Do I need a GitHub account?</span>
+            <p class="text-lg text-pretty">
+                Not for the lessons. From lesson 5 on, the exercise shows GitHub, so you see how it
+                works before you sign up.
+            </p>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-2xl font-semibold">Is my progress saved?</span>
+            <p class="text-lg text-pretty">
+                Yes, in this browser. Come back on the same device and you see which lessons you
+                started and which ones you finished.
+            </p>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-2xl font-semibold">Does it cost anything?</span>
+            <p class="text-lg text-pretty">No. The whole course is free.</p>
+        </div>
+    </div>
+</section>
+
+<section class="grid items-start gap-20 pt-28 lg:grid-cols-3">
+    <h2>Open source, <em class="font-normal">and yours to share</em></h2>
+    <div class="flex max-w-2xl flex-col gap-8 pt-2 lg:col-span-2">
+        <p class="text-xl text-pretty">
+            Git Explained is open source. The lessons, the exercises, and this site all live in one
+            public repository on GitHub. Anyone can read how it works, suggest a change, or fix a
+            mistake.
+        </p>
+        <div class="flex flex-col gap-1">
+            <span class="text-2xl font-semibold">Star the repository</span>
+            <p class="text-lg text-pretty">
+                Stars are how other people find projects on GitHub. One click helps the next person
+                who's stuck on Git.
+            </p>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-2xl font-semibold">Tell someone</span>
+            <p class="text-lg text-pretty">
+                Send it to a colleague who just joined a GitHub project, or to anyone who has said
+                Git isn't for them.
+            </p>
+        </div>
+        <div class="flex flex-col gap-1">
+            <span class="text-2xl font-semibold">Suggest a change</span>
+            <p class="text-lg text-pretty">
+                Spotted a mistake or a confusing step? Open an issue or a pull request. The glossary
+                explains both.
+            </p>
+        </div>
+        <div class="flex gap-2">
+            <a
+                pButton
+                size="large"
+                href="https://github.com/fdmomtaz/GitExplained"
+                target="_blank"
+                rel="noopener"
+                label="Star on GitHub"
+            ></a>
+            <a
+                pButton
+                size="large"
+                severity="secondary"
+                outlined
+                href="https://github.com/fdmomtaz/GitExplained"
+                target="_blank"
+                rel="noopener"
+                label="View the source"
+            ></a>
+        </div>
+    </div>
+</section>
+
+<section class="flex flex-wrap items-baseline gap-5 py-28">
+    <h2>Ready when you are.</h2>
+    <a pButton size="large" [routerLink]="['/lessons', firstLesson.id]" label="Start lesson 1"></a>
+</section>
