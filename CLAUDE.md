@@ -10,7 +10,7 @@ Mostly a writing project. The main work is lesson text in Markdown plus a read o
 
 - `docs/study-plan.md` holds the curriculum, lesson outlines, and open questions. `docs/step-text.md` holds the panel text, step by step.
 - Both are snapshots of tabs in the live Claude Doc (link in README). The doc wins when they disagree. Edit the doc with the Claude Docs tools, then refresh the matching file in `docs/`.
-- `design/` is a snapshot of the Claude Design project. Don't edit it. Read it to learn what the text must fit.
+- `design/` is a snapshot of an older draft in the Claude Design project. Don't edit it. Read it to learn what the text must fit.
 - `src/` is the Angular app (`git-explained`). The lesson text has no build step, but the app does.
 
 ## The app in `src/`
@@ -25,7 +25,7 @@ Mostly a writing project. The main work is lesson text in Markdown plus a read o
 
 ## How the text plugs into the design
 
-- `design/Git Tutorial Final.dc.html` is the current design for the app (landing, lesson, Lessons, Glossary, About). Copy its layout and styling, not its content. Lesson data comes from `LessonService`. Refresh it from the Claude Design project when the design changes.
+- The current design for the app is `Git Tutorial Final.dc.html` in the Claude Design project (link in README). It has no local copy. Read it with the `claude_design` MCP tools. Copy its layout and styling, not its content. Lesson data comes from `LessonService`.
 - `design/Git Tutorial.dc.html` is the older draft. It defines a `STEPS` array. Each step is `{ title, action, target, body: [paragraph, paragraph], task, doneMsg }`. `body` is a list of paragraphs, so write one or two separate paragraphs, not one block.
 - `action` and `target` drive the self check (for example `action: 'stage', target: 'notes.txt'`). The **Check** line in `docs/step-text.md` should map to an action on a file.
 - `fill()` replaces any `{name}` with metaphor text from `SETS` (plain, photo, shipping, desk). Only `{at0}` to `{at3}` and `{T3}` are safe in lesson text. Any other curly brace word breaks. A token must read naturally in all four metaphors ("on the shelf", "in the warehouse").

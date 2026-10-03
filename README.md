@@ -12,7 +12,7 @@ The site is called **Git Explained**.
 | Step by step panel text (source of truth) | Same doc, tab "Step text" |
 | Snapshot of both tabs, Oct 1 2026 | `docs/study-plan.md`, `docs/step-text.md` |
 | Website design (in progress, not final) | [Claude Design project](https://claude.ai/design/p/e30d20a1-9bcd-46d6-b163-74b385f19700?file=Git+Tutorial+Final.dc.html) |
-| Snapshot of the design and its imports | `design/Git Tutorial Final.dc.html` (current), `design/Git Tutorial.dc.html` (older draft), `design/support.js`, `design/_ds/broadsheet.../` |
+| Snapshot of the older design draft and its imports | `design/Git Tutorial.dc.html`, `design/support.js`, `design/_ds/broadsheet.../` |
 | Website app (Angular, Optimus UI, Tailwind) | `src/` |
 | Rules for Claude | `CLAUDE.md` |
 
