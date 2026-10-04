@@ -1,0 +1,18 @@
+<ol class="flex flex-col">
+    @for (snapshot of snapshots(); track snapshot.id; let first = $first) {
+        <li class="flex items-start gap-3 py-2">
+            <span
+                class="mt-2 size-2.5 shrink-0 rounded-full"
+                [class]="first ? 'bg-primary' : 'bg-surface-900'"
+            ></span>
+            <span class="flex flex-col">
+                <span class="font-semibold">{{ snapshot.message }}</span>
+                <span class="text-xs text-muted-color">
+                    Snapshot {{ snapshot.id }} · {{ snapshot.author }} · {{ snapshot.when }}
+                </span>
+            </span>
+        </li>
+    } @empty {
+        <li class="py-2 text-sm text-muted-color italic">No snapshots yet</li>
+    }
+</ol>

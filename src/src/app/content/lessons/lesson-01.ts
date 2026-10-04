@@ -20,7 +20,7 @@ export const lesson01: Lesson = {
         config: { showStaging: false, showOrigin: false },
         files: [
             {
-                name: 'pancakes final.md',
+                name: 'pancakes final',
                 content: '<h1>Pancakes</h1><p>1 egg</p><p>1 cup flour</p>',
                 type: FileType.Doc,
                 modifiedOn: '2026-09-28',
@@ -28,7 +28,7 @@ export const lesson01: Lesson = {
                 staged: false,
             },
             {
-                name: 'pancakes final v2.md',
+                name: 'pancakes final v2',
                 content: '<h1>Pancakes</h1><p>1 egg</p><p>1 cup flour</p><p>1 cup milk</p>',
                 type: FileType.Doc,
                 modifiedOn: '2026-09-30',
@@ -36,7 +36,7 @@ export const lesson01: Lesson = {
                 staged: false,
             },
             {
-                name: 'pancakes.md',
+                name: 'pancakes',
                 content:
                     '<h1>Pancakes</h1><p>1 egg</p><p>1 cup flour</p><p>1 cup milk</p><p>1 pinch of salt</p>',
                 type: FileType.Doc,
@@ -45,7 +45,7 @@ export const lesson01: Lesson = {
                 staged: false,
             },
             {
-                name: 'groceries.txt',
+                name: 'groceries',
                 content: 'eggs\nflour\nbutter\n',
                 type: FileType.Txt,
                 modifiedOn: '2026-10-02',
@@ -85,8 +85,10 @@ export const lesson01: Lesson = {
                     text: "Copies feel safe, but they don't tell you what changed or why. Git stores every version inside the project with a note about each change, so you never keep copies by hand again.",
                 },
             ],
-            // The task asks for two deletes. The plan allows one action per step, so this step needs a split or a multi file action.
-            action: { type: 'delete', file: 'pancakes final.md' },
+            actions: [
+                { type: 'delete', file: 'pancakes final' },
+                { type: 'delete', file: 'pancakes final v2' },
+            ],
         },
         {
             id: '1.2',
@@ -110,7 +112,7 @@ export const lesson01: Lesson = {
                     text: "Real Git does this in two moves. git init turns the folder into a repository by adding a hidden .git folder, and your first commit saves the snapshot. Here we did both at once. You'll often hear repository shortened to repo.",
                 },
             ],
-            action: { type: 'startTracking', message: 'Start of the recipe book' },
+            actions: [{ type: 'startTracking', message: 'Start of the recipe book' }],
         },
         {
             id: '1.3',
@@ -134,7 +136,7 @@ export const lesson01: Lesson = {
                     text: "The command git status lists every file that's different from the last snapshot. Files Git has never saved show up as New. Git calls those untracked.",
                 },
             ],
-            action: { type: 'edit', file: 'groceries.txt', content: 'eggs\nflour\nbutter\nmilk\n' },
+            actions: [{ type: 'edit', file: 'groceries', content: 'eggs\nflour\nbutter\nmilk\n' }],
         },
     ],
     recap: 'You started with three copies of one recipe and no idea which was right. Now you have one copy of each file and a snapshot you can always go back to.',

@@ -1,0 +1,41 @@
+<ul class="flex flex-col">
+    @for (file of files(); track file.name) {
+        <li class="flex flex-col border-b border-surface-200 py-2 last:border-b-0">
+            <div class="flex min-h-8 items-center justify-between gap-3">
+                <span class="truncate">{{ file.name }}{{ extension[file.type] }}</span>
+                @if (player(); as p) {
+                    <span class="flex shrink-0">
+                        @for (type of types(); track type) {
+                            <p-button
+                                size="small"
+                                [text]="true"
+                                [rounded]="true"
+                                [ariaLabel]="icons[type].label + ' ' + file.name"
+                                [pTooltip]="icons[type].label + '. ' + icons[type].hint"
+                                tooltipPosition="top"
+                                [severity]="p.asks(type) ? undefined : 'secondary'"
+                                [disabled]="!p.canPress(type)"
+                                (onClick)="p.press(type, file.name)"
+                            >
+                                <app-file-icon [name]="type" />
+                            </p-button>
+                        }
+                    </span>
+                }
+            </div>
+            <div class="flex items-center gap-2 text-xs text-muted-color">
+                Modified on {{ file.modifiedOn | date: 'MM/dd/yy' }}
+                @if (file.status !== unchanged && file.status !== ignored) {
+                    <app-file-icon
+                        class="size-3"
+                        [name]="file.status"
+                        [pTooltip]="icons[file.status].label + '. ' + icons[file.status].hint"
+                        tooltipPosition="top"
+                    />
+                }
+            </div>
+        </li>
+    } @empty {
+        <li class="py-2 text-sm text-muted-color italic">{{ emptyMessage() }}</li>
+    }
+</ul>

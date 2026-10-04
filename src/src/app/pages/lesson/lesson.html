@@ -1,0 +1,145 @@
+@if (player(); as p) {
+    <div class="grid items-start gap-10 pt-6 pb-16 lg:grid-cols-5">
+        <aside class="flex flex-col gap-6 lg:col-span-2">
+            <div class="flex flex-col gap-3">
+                <span class="kicker">Lesson {{ p.lesson.number }} · {{ p.lesson.title }}</span>
+                <p-button
+                    severity="secondary"
+                    [label]="
+                        'Step ' +
+                        (p.index() + 1) +
+                        ' of ' +
+                        p.lesson.steps.length +
+                        ' · ' +
+                        p.step().title
+                    "
+                    (onClick)="picker.toggle($event)"
+                />
+                <div class="h-1 bg-surface-200">
+                    <div class="h-1 bg-primary" [style.width.%]="p.percent()"></div>
+                </div>
+            </div>
+
+            <p-popover #picker>
+                <div class="flex w-80 flex-col">
+                    @for (step of p.lesson.steps; track step.id; let i = $index) {
+                        <button
+                            type="button"
+                            class="flex items-baseline gap-3 rounded-sm px-3 py-2 text-left hover:bg-primary-50 disabled:opacity-50"
+                            [class.font-semibold]="i === p.index()"
+                            [disabled]="i > p.doneCount()"
+                            (click)="p.goTo(i); picker.hide()"
+                        >
+                            <span class="w-5 text-sm text-muted-color">{{ i + 1 }}</span>
+                            <span class="flex-1">{{ step.title }}</span>
+                            <span class="text-xs text-primary-700">
+                                {{
+                                    i < p.doneCount()
+                                        ? 'Done'
+                                        : i === p.index()
+                                          ? 'You are here'
+                                          : ''
+                                }}
+                            </span>
+                        </button>
+                    }
+                    @if (next(); as n) {
+                        <div class="flex flex-col gap-1 px-3 pt-3">
+                            <span class="kicker text-xs">Up next</span>
+                            <span>Lesson {{ n.number }} · {{ n.title }}</span>
+                        </div>
+                    }
+                </div>
+            </p-popover>
+
+            <div class="flex flex-col gap-3">
+                <span class="kicker">Step {{ p.index() + 1 }}</span>
+                <h2 class="text-4xl">{{ p.step().title }}</h2>
+                @for (paragraph of p.paragraphs(); track $index) {
+                    <p class="text-lg/relaxed text-pretty">{{ paragraph }}</p>
+                }
+            </div>
+
+            <div class="flex items-start gap-3">
+                <span
+                    class="mt-1 grid size-5 shrink-0 place-items-center rounded-sm text-sm"
+                    [class]="
+                        p.done() ? 'bg-primary text-primary-contrast' : 'border-2 border-primary'
+                    "
+                >
+                    @if (p.done()) {
+                        ✓
+                    }
+                </span>
+                <div class="flex flex-col gap-1">
+                    <span class="kicker text-xs">Your task</span>
+                    <span class="text-lg font-semibold">{{ p.text(TextType.Task) }}</span>
+                    @if (p.done()) {
+                        <p class="italic">{{ p.text(TextType.Done) }}</p>
+                    }
+                </div>
+            </div>
+
+            @if (p.wrong()) {
+                <p-message severity="warn">
+                    {{
+                        p.text(TextType.WrongMove) ??
+                            "That's not the file the task asks for. Press Reset step and try again."
+                    }}
+                </p-message>
+            }
+
+            @if (p.isLast() && p.done()) {
+                <div class="flex flex-col gap-1 border-t pt-4">
+                    <span class="kicker text-xs">End of lesson</span>
+                    <p class="text-pretty">{{ p.lesson.recap }}</p>
+                </div>
+            }
+
+            @if (p.text(TextType.Details); as details) {
+                <details class="border-t pt-4">
+                    <summary class="cursor-pointer font-semibold">More details</summary>
+                    <p class="pt-2 text-pretty">{{ details }}</p>
+                </details>
+            }
+
+            <div class="flex items-center justify-between gap-3 border-t pt-4">
+                <div class="flex items-center gap-1">
+                    <p-button
+                        label="← Back"
+                        [text]="true"
+                        [disabled]="p.index() === 0"
+                        (onClick)="p.back()"
+                    />
+                    <p-button label="Reset step" [text]="true" (onClick)="p.reset()" />
+                </div>
+                <div class="flex items-center gap-3">
+                    @if (!p.done()) {
+                        <span class="text-sm text-muted-color">Finish the task to continue</span>
+                    }
+                    @if (p.isLast() && p.done()) {
+                        @if (next(); as n) {
+                            <a
+                                pButton
+                                [routerLink]="['/lessons', n.id]"
+                                [label]="'Next lesson · ' + n.title + ' →'"
+                            ></a>
+                        } @else {
+                            <a pButton routerLink="/lessons" label="All lessons"></a>
+                        }
+                    } @else {
+                        <p-button label="Next step →" [disabled]="!p.done()" (onClick)="p.next()" />
+                    }
+                </div>
+            </div>
+        </aside>
+
+        <app-workspace class="lg:col-span-3" [player]="p" />
+    </div>
+} @else {
+    <section class="flex flex-col items-start gap-6 py-24">
+        <h1>{{ lesson()?.title ?? 'Lesson not found' }}</h1>
+        <p class="max-w-xl text-xl text-pretty">This lesson isn't ready yet.</p>
+        <a pButton routerLink="/lessons" label="All lessons"></a>
+    </section>
+}

@@ -16,3 +16,8 @@ export type Action =
     | { type: 'merge'; branch: string; message: string; files: WorkspaceFile[] }
     | { type: 'resolve'; file: string; content: string }
     | { type: 'newTag'; name: string };
+
+export type ActionType = Action['type'];
+
+/** The buttons that sit on a file row. */
+export type FileActionType = 'edit' | 'delete' | 'stage' | 'unstage';

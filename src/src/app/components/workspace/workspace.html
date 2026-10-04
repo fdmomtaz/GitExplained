@@ -1,0 +1,76 @@
+<div class="flex flex-col gap-4 rounded-md bg-surface-100 p-6">
+    @if (ws().origin; as origin) {
+        <section class="flex flex-col gap-4 rounded-md bg-surface-0 p-6">
+            <div class="flex items-baseline gap-3">
+                <h3 class="text-2xl font-semibold">{{ origin.label }}</h3>
+                <span class="text-sm text-muted-color">On GitHub · the shared copy</span>
+            </div>
+            <div class="grid items-start gap-10 md:grid-cols-2">
+                <div class="flex flex-col gap-1">
+                    <app-action-bar title="Files" [player]="player()" />
+                    <app-file-list [files]="origin.files" />
+                </div>
+                <div class="flex flex-col gap-1">
+                    <app-action-bar title="History" [player]="player()" />
+                    <app-history-list [snapshots]="origin.history" />
+                </div>
+            </div>
+        </section>
+        <div class="flex items-center gap-3 px-6">
+            <app-action-bar [player]="player()" [types]="['push']" />
+            <span class="text-sm text-muted-color">
+                @if (ahead() > 0) {
+                    {{ ahead() }} {{ ahead() === 1 ? 'snapshot is' : 'snapshots are' }} in your
+                    local history but not on origin yet.
+                } @else {
+                    Everything is in sync.
+                }
+            </span>
+        </div>
+    } @else if (ws().config.showOrigin) {
+        <app-action-bar class="px-6" [player]="player()" [types]="['connect']" />
+    }
+
+    <section class="flex flex-col gap-4 rounded-md bg-surface-0 p-6">
+        <div class="flex items-center justify-between gap-3">
+            <div class="flex items-baseline gap-3">
+                <h3 class="text-2xl font-semibold">Your folder</h3>
+                <span class="text-sm text-muted-color">
+                    {{
+                        ws().history ? 'A repository, tracked by Git' : 'A plain folder, no Git yet'
+                    }}
+                </span>
+            </div>
+            @if (!ws().history) {
+                <app-action-bar [player]="player()" [types]="['startTracking']" />
+            }
+        </div>
+        <div class="grid items-start gap-10" [class]="ws().history ? 'md:grid-cols-2' : ''">
+            <div class="flex flex-col gap-1">
+                @if (staging()) {
+                    <app-action-bar title="Staging area" [player]="player()" [types]="['commit']" />
+                    <app-file-list
+                        [files]="staged()"
+                        emptyMessage="Nothing staged"
+                        [player]="player()"
+                        [types]="['unstage']"
+                    />
+                }
+                <app-action-bar title="Working files" [player]="player()" />
+                <app-file-list [files]="working()" [player]="player()" [types]="workingTypes()" />
+            </div>
+            @if (ws().history; as history) {
+                <div class="flex flex-col gap-1">
+                    <app-action-bar
+                        title="Local history"
+                        [player]="player()"
+                        [types]="staging() ? [] : ['commit']"
+                    />
+                    <app-history-list [snapshots]="history" />
+                </div>
+            }
+        </div>
+    </section>
+</div>
+
+<app-icon-legend class="block px-6 pt-6" [names]="legend()" />

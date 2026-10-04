@@ -1,0 +1,16 @@
+<div class="flex min-h-9 items-center justify-between gap-3">
+    @if (title()) {
+        <h6 class="text-sm font-semibold text-muted-color">{{ title() }}</h6>
+    }
+    <span class="flex gap-2">
+        @for (type of types(); track type) {
+            <p-button
+                size="small"
+                [label]="labels[type]"
+                [severity]="player().canPress(type) ? undefined : 'secondary'"
+                [disabled]="!player().canPress(type)"
+                (onClick)="player().press(type)"
+            />
+        }
+    </span>
+</div>
