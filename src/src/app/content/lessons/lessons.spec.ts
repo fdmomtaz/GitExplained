@@ -1,8 +1,15 @@
 import { TextType } from '../../enums/text-type';
+import { cheers } from '../cheers';
 import { lessons } from './index';
 
 // The writing rules from CLAUDE.md. Rendered text never has these.
 const BANNED = /[-–—:;*{}]/;
+
+describe('cheers', () => {
+    it('follow the writing rules', () => {
+        for (const cheer of cheers) expect(cheer).not.toMatch(BANNED);
+    });
+});
 
 describe('lessons', () => {
     for (const lesson of lessons) {

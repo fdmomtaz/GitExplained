@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { cheers } from '../content/cheers';
 import { lessons } from '../content/lessons';
 import { Lesson } from '../models/lesson';
 
@@ -13,5 +14,10 @@ export class LessonService {
 
     lesson(id: string): Lesson | undefined {
         return this.all.find((l) => l.id === id);
+    }
+
+    /** The cheer for the step at this index, cycling through the list. */
+    cheer(index: number): string {
+        return cheers[index % cheers.length];
     }
 }
