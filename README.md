@@ -1,138 +1,106 @@
-# GitExplained
+# Git Explained
 
-A free, hands on course that teaches Git concepts to absolute beginners and non developers. No command line and no code. You click, watch your files move between places, and learn why each move matters.
+A free, hands on course that teaches the ideas behind Git to beginners and people who don't write code. There's no command line and nothing to install. You press buttons in a small pretend project, watch your files move from place to place, and learn why each move matters.
 
-The site is called **Git Explained**.
+## How it works
 
-## Where things live
+Each lesson page puts the lesson text on the left and a live workspace on the right, a layout borrowed from the [Angular tutorial](https://angular.dev/tutorials/learn-angular). Every step teaches one idea in a few short sentences and gives you one task. You do the task in the workspace, the step checks itself, and the next step unlocks.
 
-| What | Where |
-| --- | --- |
-| Study plan and lesson outlines (source of truth) | [Claude Doc, tab "Git Together study plan and lessons"](https://claude.ai/code/artifact/af488e27-c960-41ef-891d-71449053fe82) |
-| Step by step panel text (source of truth) | Same doc, tab "Step text" |
-| Snapshot of both tabs, Oct 1 2026 | `docs/study-plan.md`, `docs/step-text.md` |
-| Website design (in progress, not final) | [Claude Design project](https://claude.ai/design/p/e30d20a1-9bcd-46d6-b163-74b385f19700?file=Git+Tutorial+Final.dc.html) |
-| Snapshot of the older design draft and its imports | `design/Git Tutorial.dc.html`, `design/support.js`, `design/_ds/broadsheet.../` |
-| Website app (Angular, Optimus UI, Tailwind) | `src/` |
-| Rules for Claude | `CLAUDE.md` |
-
-The doc is the live version. The files in `docs/` are a snapshot. If they disagree, the doc wins. Refresh the snapshot when the doc changes.
-
-## The idea
-
-The page layout follows the [Angular tutorial](https://angular.dev/tutorials/learn-angular). Lesson text sits on the left, and a live workspace sits on the right. Each step gives you one task. You do it in the workspace, the step checks itself, and Next unlocks.
-
-The text does not copy Angular's approach of skipping explanations. Every step teaches one idea in plain words that take about 15 seconds to read. A closed **More details** box holds the technical side, like real Git terms and commands, for anyone who wants it.
+Plain words come first. A closed **More details** box sits next to the text it explains and holds the real Git terms and commands for anyone who wants them.
 
 ### The workspace
 
-Your design shows four places. Each lesson only reveals the ones it needs.
+The workspace shows up to four places. Each lesson only reveals the ones it needs, one at a time.
 
 | Place | Shows up in | What lives there |
 | --- | --- | --- |
 | Working files | Lesson 1 | The files you edit right now |
 | Local history | Lesson 1 | Every snapshot you saved |
 | Staging area | Lesson 3 | Changes picked for the next snapshot |
-| Origin (GitHub) | Lesson 5 | The shared copy everyone uses |
+| Origin (GitHub) | Lesson 5 | The shared copy everyone works from |
 
-There is no "your computer" or "Sam's computer" panel. Teammates' snapshots just appear on origin.
+### The story
 
-### The sample project
-
-The whole course uses a small family recipe book. It holds `pancakes.md`, `groceries.txt`, `cookies.md`, `notes.txt`, and `soup.md`. Sam is the teammate from lesson 6 on. Alex owns the public cookbook in lesson 11.
-
-### Metaphor tokens
-
-The design has a metaphor switch with four options (plain, photo, shipping, desk). Lesson text uses tokens so the switch keeps working.
-
-| Token | Plain reads as |
-| --- | --- |
-| `{at0}` | in your working files |
-| `{at1}` | in the staging area |
-| `{at2}` | in your local history |
-| `{at3}` | on origin |
-| `{T3}` | Origin |
+The whole course follows one small family recipe book with pancakes, cookies, soup, and a shopping list. Sam joins in lesson 6 as a teammate who loves soup and can't spell. Alex owns the public cookbook you add to in lesson 11. Along the way you hide a box mix secret, undo 10 cups of salt, and settle the milk wars.
 
 ## Curriculum
 
-12 lessons, 47 steps, about an hour in total.
+12 lessons, 51 steps, about an hour in total.
 
 | # | Lesson | Git words | Steps | Status |
 | --- | --- | --- | --- | --- |
-| 1 | What is a repository | repository | 3 | Polished |
-| 2 | Taking snapshots | commit, history | 4 | Rough draft |
-| 3 | Choosing what to save | staging area, stage, unstage | 4 | Rough draft |
-| 4 | Going back in time | discard, revert | 4 | Rough draft |
-| 5 | Sending to origin | origin, push | 3 | Rough draft |
-| 6 | Getting updates | pull, behind | 4 | Rough draft |
-| 7 | Branches | branch, main, switch | 5 | Rough draft |
-| 8 | Merging | merge | 4 | Rough draft |
-| 9 | When changes collide | conflict | 4 | Outline only |
-| 10 | Asking before merging | pull request, review | 4 | Outline only |
-| 11 | Copying a project | fork, clone | 4 | Outline only |
-| 12 | Good habits | ignore, tag, release | 4 | Outline only |
+| 1 | What is a repository | repository | 3 | Full draft |
+| 2 | Taking snapshots | commit, history | 4 | Full draft |
+| 3 | Choosing what to save | staging area, stage, unstage | 4 | Full draft |
+| 4 | Going back in time | discard, revert | 4 | Full draft |
+| 5 | Sending to origin | origin, push, ahead | 4 | Full draft |
+| 6 | Getting updates | pull, behind | 5 | Full draft |
+| 7 | Branches | branch, main, switch | 5 | Full draft |
+| 8 | Merging | merge | 4 | Full draft |
+| 9 | When changes collide | conflict | 4 | Full draft |
+| 10 | Asking before merging | pull request, review | 5 | Full draft |
+| 11 | Copying a project | fork, clone | 5 | Full draft |
+| 12 | Good habits | ignore, tag, release | 4 | Full draft |
 
-## Step format
+A few choices shape the whole course.
 
-Each step has these parts. The first four map to the fields in the design's `STEPS` array (`title`, `body`, `task`, `doneMsg`).
+- It teaches concepts, not the command line or any one app.
+- Lesson 2 saves snapshots without staging. Lesson 3 introduces staging once snapshots feel familiar.
+- Lesson 1 opens on a messy folder with no Git at all, so you feel the problem before you see the fix.
 
-| Part | Rule |
-| --- | --- |
-| Title | 5 words or fewer |
-| Body | 1 or 2 short paragraphs, about 40 words |
-| Task | One sentence that starts with Press or Click |
-| Done | Adds meaning. Never just repeats what the screen shows |
-| Check | What the workspace tests to mark the step done |
-| Wrong move | Message for a likely mistake (only where one is likely) |
-| Workspace | What changes on screen (only where something changes) |
-| More details | Closed by default, 60 words or fewer, the technical side |
+## Project status
 
-Lesson 1 in `docs/step-text.md` is the template. Every other lesson should match it.
+The text for all 12 lessons is drafted. The site has its landing, lessons, glossary, and about pages. The lesson page and the workspace that runs each step are still being built, so you can't take the course in the browser yet.
 
-## Decisions so far
+Open questions
 
-- The course teaches concepts, not the command line or any specific tool.
-- The audience is absolute beginners and non developers.
-- The scope is all 12 lessons, extras included.
-- Lesson 2 hides staging. Lesson 3 introduces it. (The design currently teaches staging in its lesson 2, which needs renumbering.)
-- Lesson 1 opens on a messy folder with no Git yet.
-- The four places get revealed one at a time, with no up front tour.
-- The voice is relatable and centered on you, the learner. See `CLAUDE.md`.
-- We polish one lesson completely before moving to the next.
-
-## Open questions
-
-- Metaphors. Launch with all four, or only plain or desk?
-- Video. One per lesson or one per step? The design shows a 1:40 video per step.
-- Typing. Should commit messages and branch names be typed or picked from a list?
-- Lesson 1 needs a workspace state with no history panel. Does the layout support it?
-- Lesson 11 needs a second origin panel for Alex's cookbook.
-- Are the names Sam and Alex final?
-
-## Next steps
-
-1. Review lesson 1 in the doc and finish polishing it.
-2. Rewrite lesson 2 in the same format and voice as lesson 1.
-3. Keep going one lesson at a time through lesson 12.
-4. Feed the finished text into the design's `STEPS` data.
+- Should each lesson have one video, or each step?
+- Should learners type commit messages and branch names, or pick them from a list?
+- Are Sam and Alex the final names?
 
 ## Running the site
 
-The site is an Angular app in `src/`. It uses [Optimus UI](https://optimus.openng.org/) for its components and [Tailwind CSS](https://tailwindcss.com/) v4 for layout and spacing. The Optimus Tailwind plugin adds theme colors like `bg-primary` as Tailwind classes. Run these commands from the `src` folder.
+The site is an [Angular](https://angular.dev/) app in `src/`. It uses [Optimus UI](https://optimus.openng.org/) for components and [Tailwind CSS](https://tailwindcss.com/) v4 for layout. You need Node.js and npm. Run these commands from the `src` folder.
 
 ```bash
-npm install      # first time only
-npx ng serve     # dev server at http://localhost:4200
-npx ng build     # production build in dist/
-npx ng test      # unit tests with Vitest
+npm install                 # first time only
+npx ng serve                # dev server at http://localhost:4200
+npx ng build                # production build in dist/
+npx ng test --watch=false   # unit tests, including the lesson writing checks
 ```
+
+## Project layout
+
+| What | Where |
+| --- | --- |
+| Lessons, one file each | `src/src/app/content/lessons/lesson-NN.ts` |
+| Writing and format checks for every lesson | `src/src/app/content/lessons/lessons.spec.ts` |
+| The shape of a lesson, a step, and the workspace | `src/src/app/models/` |
+| Site pages | `src/src/app/pages/` |
+| The original course outline | `docs/study-plan.md` |
+| Guidance for AI coding agents, with the full writing rules | `CLAUDE.md` |
+
+## Working on the lessons
+
+Each lesson is one TypeScript file. It holds the lesson card, the workspace the lesson starts with, and its steps. Lesson 1 is the template for format and voice.
+
+A step has these parts.
+
+| Part | What it is |
+| --- | --- |
+| Title | 5 words or fewer. It also shows in the step picker |
+| Body | 1 or 2 short paragraphs, 10 to 50 words in total, plus at most one More details box placed after the paragraph it explains |
+| Task | One sentence that names the exact button to press |
+| Done | Shows once the task is done. It adds meaning or a joke and never just repeats the screen |
+| Wrong move | Optional. A nudge for a likely mistake |
+| Actions | The moves the task asks for. The step is done once you make all of them |
+
+The writing is plain and friendly, at a middle school reading level, with one idea per step. Lesson text never uses dashes, colons, semicolons, or asterisks, and the tests fail if it does. `CLAUDE.md` has the full writing rules and voice guide.
+
+The story carries from one lesson to the next. If you change the files, snapshots, or branches a lesson leaves behind, update the next lesson's starting workspace to match. Run the tests and a build before you send a change.
 
 Code uses 4 spaces for indents. Prettier and `.editorconfig` in `src/` already follow that.
 
-## Starting a new Claude session
+## License
 
-Open Claude Code in this folder. It reads `CLAUDE.md` on its own. Then say something like this.
-
-> Read README.md and docs/step-text.md. Lesson 1 is the template. Let's polish lesson 2.
-
-To work in the live doc instead of the snapshot, give Claude the doc link above. Run `/design-login` first if Claude needs to read the design project.
+[MIT](LICENSE). That covers the code and the lesson text.

@@ -26,6 +26,18 @@ export class ProgressService {
         }
     }
 
+    /** Text classes for a lesson's number and status line. Magenta while in progress, blue once done. */
+    colors(lesson: Lesson): { number: string; status: string } {
+        switch (this.state(lesson)) {
+            case 'completed':
+                return { number: 'text-primary', status: 'text-primary-700' };
+            case 'inProgress':
+                return { number: 'text-magenta', status: 'text-magenta-700' };
+            default:
+                return { number: '', status: 'text-muted-color' };
+        }
+    }
+
     hasStarted(lessons: Lesson[]): boolean {
         return lessons.some((l) => this.state(l) !== 'notStarted');
     }

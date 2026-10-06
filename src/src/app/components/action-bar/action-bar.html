@@ -4,13 +4,16 @@
     }
     <span class="flex gap-2">
         @for (type of types(); track type) {
-            <p-button
+            <button
+                pButton
+                type="button"
                 size="small"
-                [label]="labels[type]"
+                [label]="labels[type] ?? type"
                 [severity]="player().canPress(type) ? undefined : 'secondary'"
                 [disabled]="!player().canPress(type)"
-                (onClick)="player().press(type)"
-            />
+                [class.animate-glow]="player().asks(type)"
+                (click)="player().press(type)"
+            ></button>
         }
     </span>
 </div>

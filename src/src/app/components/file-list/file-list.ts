@@ -25,4 +25,10 @@ export class FileList {
     protected readonly icons = ICONS;
     protected readonly unchanged = FileStatus.Unchanged;
     protected readonly ignored = FileStatus.Ignored;
+
+    /** The file the step just changed, lit up once the step is done. */
+    protected isTouched(name: string): boolean {
+        const p = this.player();
+        return !!p && p.done() && p.touched() === name;
+    }
 }

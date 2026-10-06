@@ -37,7 +37,7 @@ export function apply(ws: Workspace, action: Action): Workspace {
             if (!ws.history) throw new Error('Commit needs Start tracking first');
             return commit(ws, action.message);
         case 'connect':
-            return { ...ws, origin: { label: 'Origin', files: [], history: [] } };
+            return { ...ws, origin: { label: 'Origin', files: [], history: [], pullRequests: [] } };
         case 'push':
             if (!ws.origin || !ws.history) throw new Error('Push needs history and origin');
             return {

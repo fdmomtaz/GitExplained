@@ -1,5 +1,4 @@
 import { computed, signal, WritableSignal } from '@angular/core';
-import { TextType } from '../../enums/text-type';
 import { Action, ActionType } from '../../models/action';
 import { Workspace } from '../../models/workspace';
 import { Lesson } from '../../models/lesson';
@@ -18,24 +17,16 @@ export class LessonPlayer {
     readonly remaining: WritableSignal<Action[]>;
     /** You pressed the button the step asks for on the wrong file. Only Reset step helps now. */
     readonly wrong = signal(false);
+    /** The file your last asked for press changed, so the workspace can point at it. */
+    readonly touched = signal<string | undefined>(undefined);
 
     readonly step = computed(() => this.lesson.steps[this.index()]);
     readonly done = computed(() => this.index() < this.doneCount());
     readonly isLast = computed(() => this.index() === this.lesson.steps.length - 1);
-    readonly percent = computed(() => (this.doneCount() / this.lesson.steps.length) * 100);
-    readonly paragraphs = computed(() =>
-        this.step()
-            .body.filter((b) => b.type === TextType.Paragraph)
-            .map((b) => b.text),
-    );
 
     constructor(readonly lesson: Lesson) {
         this.workspace = signal(lesson.workspace);
         this.remaining = signal(lesson.steps[0].actions);
-    }
-
-    text(type: TextType): string | undefined {
-        return this.step().body.find((b) => b.type === type)?.text;
     }
 
     /** The step still asks for this button. */
@@ -53,6 +44,7 @@ export class LessonPlayer {
         if (match) {
             this.workspace.update((ws) => apply(ws, match));
             this.remaining.update((r) => r.filter((a) => a !== match));
+            this.touched.set(file);
             if (this.remaining().length === 0) {
                 this.doneCount.update((n) => Math.max(n, this.index() + 1));
             }
@@ -70,6 +62,7 @@ export class LessonPlayer {
         this.workspace.set(stateAt(this.lesson, index, done));
         this.remaining.set(done ? [] : this.lesson.steps[index].actions);
         this.wrong.set(false);
+        this.touched.set(undefined);
     }
 
     reset(): void {

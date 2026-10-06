@@ -9,7 +9,10 @@
 
 <section class="grid items-start gap-20 pt-16 lg:grid-cols-5">
     <div class="flex flex-col gap-5 lg:col-span-3">
-        <h1>Git, explained for everyone.</h1>
+        <h1>
+            Git, explained for
+            <app-plate-number class="font-normal italic" headline value="everyone." />
+        </h1>
         <p class="max-w-xl text-xl text-pretty">
             Git has a reputation for being hard. It isn't. It just never had a good teacher.
         </p>
@@ -70,20 +73,19 @@
         @for (lesson of lessons; track lesson.id) {
             <a
                 [routerLink]="['/lessons', lesson.id]"
-                class="flex flex-col gap-0.5 hover:text-primary"
+                class="flex flex-col gap-0.5 transition hover:-translate-y-1 hover:-rotate-1 hover:text-primary-700"
             >
-                <span class="text-xs text-muted-color">
-                    Lesson {{ lesson.number }} · {{ lesson.minutes }} min
-                </span>
+                <div class="flex items-baseline gap-2">
+                    <span
+                        class="text-5xl leading-none font-semibold tracking-tight"
+                        [class]="progress.colors(lesson).number"
+                    >
+                        {{ lesson.number }}
+                    </span>
+                    <span class="text-xs text-muted-color">{{ lesson.minutes }} min</span>
+                </div>
                 <span class="text-lg leading-tight font-semibold">{{ lesson.title }}</span>
-                <span
-                    class="text-sm"
-                    [class]="
-                        progress.state(lesson) !== 'notStarted'
-                            ? 'text-primary-700'
-                            : 'text-muted-color'
-                    "
-                >
+                <span class="text-sm" [class]="progress.colors(lesson).status">
                     {{ progress.label(lesson) }}
                 </span>
             </a>

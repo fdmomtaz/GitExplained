@@ -10,4 +10,5 @@ export interface Workspace {
     branch: string; // the branch you're on
     branches: string[];
     origin: Origin | null; // null until Connect to GitHub in lesson 5
+    upstream: Origin | null; // someone else's project, only Alex's cookbook in lesson 11
 }

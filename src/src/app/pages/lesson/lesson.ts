@@ -42,4 +42,8 @@ export class LessonPage {
             }
         });
     }
+
+    protected cheer(index: number): string {
+        return this.lessons.cheer(index);
+    }
 }

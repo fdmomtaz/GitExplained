@@ -1,24 +1,30 @@
 <ul class="flex flex-col">
     @for (file of files(); track file.name) {
-        <li class="flex flex-col border-b border-surface-200 py-2 last:border-b-0">
+        <li
+            class="-mx-2.5 flex flex-col rounded-md border-b border-surface-200 px-2.5 py-2 last:border-b-0"
+            [class]="isTouched(file.name) ? 'animate-rise bg-primary-50' : ''"
+        >
             <div class="flex min-h-8 items-center justify-between gap-3">
                 <span class="truncate">{{ file.name }}{{ extension[file.type] }}</span>
                 @if (player(); as p) {
                     <span class="flex shrink-0">
                         @for (type of types(); track type) {
-                            <p-button
+                            <button
+                                pButton
+                                type="button"
                                 size="small"
                                 [text]="true"
                                 [rounded]="true"
-                                [ariaLabel]="icons[type].label + ' ' + file.name"
+                                [attr.aria-label]="icons[type].label + ' ' + file.name"
                                 [pTooltip]="icons[type].label + '. ' + icons[type].hint"
                                 tooltipPosition="top"
                                 [severity]="p.asks(type) ? undefined : 'secondary'"
                                 [disabled]="!p.canPress(type)"
-                                (onClick)="p.press(type, file.name)"
+                                [class.animate-glow]="p.asks(type)"
+                                (click)="p.press(type, file.name)"
                             >
                                 <app-file-icon [name]="type" />
-                            </p-button>
+                            </button>
                         }
                     </span>
                 }
