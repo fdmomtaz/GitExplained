@@ -100,3 +100,7 @@ The writing is plain and friendly, at a middle school reading level, with one id
 The story carries from one lesson to the next. If you change the files, snapshots, or branches a lesson leaves behind, update the next lesson's starting workspace to match. Run the tests and a build before you send a change.
 
 Code uses 4 spaces for indents. Prettier and `.editorconfig` in `src/` already follow that.
+
+## License
+
+[MIT](LICENSE). That covers the code and the lesson text.
