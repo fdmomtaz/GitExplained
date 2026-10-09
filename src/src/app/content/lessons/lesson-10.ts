@@ -1,5 +1,7 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
 import { TextType } from '../../enums/text-type';
+import { WorkspaceEventType } from '../../enums/workspace-event-type';
 import { Lesson } from '../../models/lesson';
 import { lines } from '../lines';
 
@@ -390,10 +392,10 @@ export const lesson10: Lesson = {
             done: "Your request is open on origin, and Sam gets a notice. main hasn't changed. Nothing gets merged until someone says yes.",
             // Check. A pull request from chocolate into main is open on origin.
             // Workspace. The Pull requests tab on origin lists your request. Once the step is done, Sam's comment shows up on it.
-            actions: [{ type: 'newPullRequest', from: 'chocolate', into: 'main' }],
+            actions: [{ type: ActionType.NewPullRequest, from: 'chocolate', into: 'main' }],
             events: [
                 {
-                    type: 'comment',
+                    type: WorkspaceEventType.Comment,
                     author: 'Sam',
                     text: 'Love it. But 2 cups of chips is a lot, even for me. Make it 1?',
                 },
@@ -418,7 +420,7 @@ export const lesson10: Lesson = {
             // Check. A new snapshot on chocolate is in local history.
             actions: [
                 {
-                    type: 'edit',
+                    type: ActionType.Edit,
                     file: 'pancakes',
                     content: lines(
                         'Pancakes',
@@ -432,8 +434,8 @@ export const lesson10: Lesson = {
                         'Serves 4',
                     ),
                 },
-                { type: 'stage', file: 'pancakes' },
-                { type: 'commit', message: 'Use 1 cup of chocolate chips' },
+                { type: ActionType.Stage, file: 'pancakes' },
+                { type: ActionType.Commit, message: 'Use 1 cup of chocolate chips' },
             ],
         },
         {
@@ -453,8 +455,10 @@ export const lesson10: Lesson = {
             done: "The pull request shows your new snapshot right under Sam's comment. Sam can see you listened.",
             // Check. The pull request shows your new snapshot.
             // Workspace. Once the step is done, Sam approves the pull request.
-            actions: [{ type: 'push' }],
-            events: [{ type: 'approve', author: 'Sam', text: 'Delicious. Ship it.' }],
+            actions: [{ type: ActionType.Push }],
+            events: [
+                { type: WorkspaceEventType.Approve, author: 'Sam', text: 'Delicious. Ship it.' },
+            ],
         },
         {
             id: '10.4',
@@ -472,7 +476,7 @@ export const lesson10: Lesson = {
             task: 'Press Merge pull request.',
             done: 'Main on origin has the chocolate chips. The request closes, but it keeps the whole conversation, so anyone can see why main changed.',
             // Check. Origin main has the chocolate change, and the pull request is closed.
-            actions: [{ type: 'mergePullRequest' }],
+            actions: [{ type: ActionType.MergePullRequest }],
         },
         {
             id: '10.5',
@@ -492,7 +496,7 @@ export const lesson10: Lesson = {
             // Check. You're on main, local history has the merge, and chocolate is gone from your branches.
             actions: [
                 {
-                    type: 'switch',
+                    type: ActionType.Switch,
                     branch: 'main',
                     files: [
                         {
@@ -554,7 +558,7 @@ export const lesson10: Lesson = {
                     ],
                 },
                 {
-                    type: 'pull',
+                    type: ActionType.Pull,
                     files: [
                         {
                             name: 'pancakes',
@@ -615,7 +619,7 @@ export const lesson10: Lesson = {
                         },
                     ],
                 },
-                { type: 'deleteBranch', branch: 'chocolate' },
+                { type: ActionType.DeleteBranch, branch: 'chocolate' },
             ],
         },
     ],

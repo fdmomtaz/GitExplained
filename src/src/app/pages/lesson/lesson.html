@@ -1,4 +1,5 @@
-@if (player(); as p) {
+@if (player.ready()) {
+    @let p = player;
     <div class="grid items-start gap-10 pt-6 pb-16 lg:grid-cols-5">
         <aside class="flex flex-col gap-6 lg:col-span-2">
             <div class="flex flex-col gap-3">
@@ -151,7 +152,7 @@
             </div>
         </aside>
 
-        <app-workspace class="lg:col-span-3" [player]="p" />
+        <app-workspace class="lg:col-span-3" />
     </div>
 } @else {
     <section class="flex flex-col items-start gap-6 py-24">

@@ -1,3 +1,4 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
@@ -129,7 +130,7 @@ export const lesson04: Lesson = {
             // Workspace. Working files switch to Snapshot 2's version, with a note that says Viewing Snapshot 2.
             actions: [
                 {
-                    type: 'view',
+                    type: ActionType.View,
                     snapshot: '2',
                     files: [
                         {
@@ -182,7 +183,7 @@ export const lesson04: Lesson = {
             // Check. Working files show the latest snapshot.
             actions: [
                 {
-                    type: 'backToNow',
+                    type: ActionType.BackToNow,
                     files: [
                         {
                             name: 'pancakes',
@@ -254,7 +255,7 @@ export const lesson04: Lesson = {
             // Check. groceries shows Unchanged.
             actions: [
                 {
-                    type: 'discard',
+                    type: ActionType.Discard,
                     file: 'groceries',
                     files: [
                         {
@@ -325,7 +326,7 @@ export const lesson04: Lesson = {
             // Check. Snapshot 6 is in local history, cookies has no salt, and Snapshot 5 is still in history.
             actions: [
                 {
-                    type: 'revert',
+                    type: ActionType.Revert,
                     snapshot: '5',
                     message: 'Undo Add 10 cups of salt',
                     files: [

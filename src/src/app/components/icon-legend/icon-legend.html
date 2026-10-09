@@ -5,8 +5,8 @@
             <li class="flex items-start gap-2">
                 <app-file-icon class="mt-1 shrink-0" [name]="name" />
                 <span>
-                    <span class="font-semibold">{{ icons[name].label }}.</span>
-                    {{ icons[name].hint }}
+                    <span class="font-semibold">{{ labelOf(icons, name) }}.</span>
+                    {{ hintOf(icons, name) }}
                 </span>
             </li>
         }

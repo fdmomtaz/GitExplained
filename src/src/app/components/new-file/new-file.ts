@@ -1,7 +1,8 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { InputTextModule } from '@openng/optimus-ui/inputtext';
 import { PopoverModule } from '@openng/optimus-ui/popover';
+import { ActionType } from '../../enums/action-type';
 import { LessonPlayer } from '../../pages/lesson/lesson-player';
 
 /** The New file button. It asks for a name and won't reuse one. */
@@ -11,12 +12,12 @@ import { LessonPlayer } from '../../pages/lesson/lesson-player';
     templateUrl: './new-file.html',
 })
 export class NewFile {
-    readonly player = input.required<LessonPlayer>();
+    private readonly player = inject(LessonPlayer);
 
     protected readonly name = signal('');
     protected readonly trimmed = computed(() => this.name().trim());
     protected readonly taken = computed(() =>
-        this.player()
+        this.player
             .workspace()
             .files.some((f) => f.name.toLowerCase() === this.trimmed().toLowerCase()),
     );
@@ -28,7 +29,7 @@ export class NewFile {
 
     protected create(): boolean {
         if (!this.trimmed() || this.taken()) return false;
-        this.player().press('newFile', this.trimmed());
+        this.player.press(ActionType.NewFile, this.trimmed());
         return true;
     }
 }

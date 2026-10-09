@@ -1,9 +1,8 @@
-import { Component, computed, input } from '@angular/core';
-import { ActionBar } from '../action-bar/action-bar';
+import { Component, computed, inject } from '@angular/core';
+import { ActionButton } from '../action-button/action-button';
 import { LessonPlayer } from '../../pages/lesson/lesson-player';
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
-import { FileActionType } from '../../models/action';
-import { IconName } from '../file-icon/file-icon';
 import { FileList } from '../file-list/file-list';
 import { IconLegend } from '../icon-legend/icon-legend';
 import { HistoryList } from '../history-list/history-list';
@@ -12,13 +11,13 @@ import { NewFile } from '../new-file/new-file';
 /** The right side of a lesson. It shows the places the lesson uses and the buttons for each. */
 @Component({
     selector: 'app-workspace',
-    imports: [ActionBar, FileList, HistoryList, IconLegend, NewFile],
+    imports: [ActionButton, FileList, HistoryList, IconLegend, NewFile],
     templateUrl: './workspace.html',
 })
 export class WorkspacePanel {
-    readonly player = input.required<LessonPlayer>();
+    private readonly player = inject(LessonPlayer);
 
-    protected readonly ws = computed(() => this.player().workspace());
+    protected readonly ws = computed(() => this.player.workspace());
     protected readonly staging = computed(() => this.ws().config.showStaging);
     protected readonly working = computed(() =>
         this.ws().files.filter((f) => !this.staging() || !f.staged),
@@ -29,17 +28,20 @@ export class WorkspacePanel {
         () => (this.ws().history?.length ?? 0) - (this.ws().origin?.history.length ?? 0),
     );
 
-    protected readonly workingTypes = computed<FileActionType[]>(() =>
-        this.staging() ? ['edit', 'delete', 'stage'] : ['edit', 'delete'],
+    protected readonly ActionType = ActionType;
+    protected readonly workingTypes = computed(() =>
+        this.staging()
+            ? [ActionType.Edit, ActionType.Delete, ActionType.Stage]
+            : [ActionType.Edit, ActionType.Delete],
     );
     /** The icons this lesson can show. Conflict only shows up once a file has one. */
-    protected readonly legend = computed<IconName[]>(() => [
+    protected readonly legend = computed<(ActionType | FileStatus)[]>(() => [
         ...this.workingTypes(),
-        ...(this.staging() ? (['unstage'] as const) : []),
+        ...(this.staging() ? [ActionType.Unstage] : []),
         FileStatus.Changed,
         FileStatus.New,
         ...(this.ws().files.some((f) => f.status === FileStatus.Conflict)
-            ? [FileStatus.Conflict as const]
+            ? [FileStatus.Conflict]
             : []),
     ]);
 }

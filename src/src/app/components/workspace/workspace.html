@@ -7,17 +7,21 @@
             </div>
             <div class="grid items-start gap-10 md:grid-cols-2">
                 <div class="flex flex-col gap-1">
-                    <app-action-bar title="Files" [player]="player()" />
+                    <div class="flex min-h-9 items-center justify-between gap-3">
+                        <h6 class="text-sm font-semibold text-muted-color">Files</h6>
+                    </div>
                     <app-file-list [files]="origin.files" />
                 </div>
                 <div class="flex flex-col gap-1">
-                    <app-action-bar title="History" [player]="player()" />
+                    <div class="flex min-h-9 items-center justify-between gap-3">
+                        <h6 class="text-sm font-semibold text-muted-color">History</h6>
+                    </div>
                     <app-history-list [snapshots]="origin.history" />
                 </div>
             </div>
         </section>
         <div class="flex items-center gap-3 px-6">
-            <app-action-bar [player]="player()" [types]="['push']" />
+            <app-action-button [type]="ActionType.Push" />
             <span class="text-sm text-muted-color">
                 @if (ahead() > 0) {
                     {{ ahead() }} {{ ahead() === 1 ? 'snapshot is' : 'snapshots are' }} in your
@@ -28,7 +32,9 @@
             </span>
         </div>
     } @else if (ws().config.showOrigin) {
-        <app-action-bar class="px-6" [player]="player()" [types]="['connect']" />
+        <div class="px-6">
+            <app-action-button [type]="ActionType.Connect" />
+        </div>
     }
 
     <section class="flex flex-col gap-4 rounded-md bg-surface-0 p-6">
@@ -42,32 +48,36 @@
                 </span>
             </div>
             @if (!ws().history) {
-                <app-action-bar [player]="player()" [types]="['startTracking']" />
+                <app-action-button [type]="ActionType.StartTracking" />
             }
         </div>
         <div class="grid items-start gap-10" [class]="ws().history ? 'md:grid-cols-2' : ''">
             <div class="flex flex-col gap-1">
                 @if (staging()) {
-                    <app-action-bar title="Staging area" [player]="player()" [types]="['commit']" />
+                    <div class="flex min-h-9 items-center justify-between gap-3">
+                        <h6 class="text-sm font-semibold text-muted-color">Staging area</h6>
+                        <app-action-button [type]="ActionType.Commit" />
+                    </div>
                     <app-file-list
                         [files]="staged()"
                         emptyMessage="Nothing staged"
-                        [player]="player()"
-                        [types]="['unstage']"
+                        [types]="[ActionType.Unstage]"
                     />
                 }
-                <app-action-bar title="Working files" [player]="player()">
-                    <app-new-file [player]="player()" />
-                </app-action-bar>
-                <app-file-list [files]="working()" [player]="player()" [types]="workingTypes()" />
+                <div class="flex min-h-9 items-center justify-between gap-3">
+                    <h6 class="text-sm font-semibold text-muted-color">Working files</h6>
+                    <app-new-file />
+                </div>
+                <app-file-list [files]="working()" [types]="workingTypes()" />
             </div>
             @if (ws().history; as history) {
                 <div class="flex flex-col gap-1">
-                    <app-action-bar
-                        title="Local history"
-                        [player]="player()"
-                        [types]="staging() ? [] : ['commit']"
-                    />
+                    <div class="flex min-h-9 items-center justify-between gap-3">
+                        <h6 class="text-sm font-semibold text-muted-color">Local history</h6>
+                        @if (!staging()) {
+                            <app-action-button [type]="ActionType.Commit" />
+                        }
+                    </div>
                     <app-history-list [snapshots]="history" />
                 </div>
             }

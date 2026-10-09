@@ -76,18 +76,13 @@
                 class="flex flex-col gap-0.5 transition hover:-translate-y-1 hover:-rotate-1 hover:text-primary-700"
             >
                 <div class="flex items-baseline gap-2">
-                    <span
-                        class="text-5xl leading-none font-semibold tracking-tight"
-                        [class]="progress.colors(lesson).number"
-                    >
+                    <span class="text-5xl leading-none font-semibold tracking-tight">
                         {{ lesson.number }}
                     </span>
                     <span class="text-xs text-muted-color">{{ lesson.minutes }} min</span>
                 </div>
                 <span class="text-lg leading-tight font-semibold">{{ lesson.title }}</span>
-                <span class="text-sm" [class]="progress.colors(lesson).status">
-                    {{ progress.label(lesson) }}
-                </span>
+                <span class="text-sm">{{ label(lesson) }}</span>
             </a>
         }
     </div>

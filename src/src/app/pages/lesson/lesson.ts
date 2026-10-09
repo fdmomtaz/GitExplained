@@ -12,6 +12,7 @@ import { LessonPlayer } from './lesson-player';
 @Component({
     selector: 'app-lesson',
     imports: [RouterLink, ButtonModule, MessageModule, PopoverModule, WorkspacePanel],
+    providers: [LessonPlayer],
     templateUrl: './lesson.html',
 })
 export class LessonPage {
@@ -23,19 +24,16 @@ export class LessonPage {
 
     protected readonly TextType = TextType;
     protected readonly lesson = computed(() => this.lessons.lesson(this.id()));
-    /** Draft lessons have no steps yet, so they get no player. */
-    protected readonly player = computed(() => {
-        const lesson = this.lesson();
-        return lesson?.steps.length ? new LessonPlayer(lesson) : undefined;
-    });
+    protected readonly player = inject(LessonPlayer);
     protected readonly next = computed(() =>
         this.lessons.lessons().find((l) => l.number === (this.lesson()?.number ?? 0) + 1),
     );
 
     constructor() {
+        this.player.play(this.lesson);
         effect(() => {
-            const player = this.player();
-            if (!player) return;
+            const player = this.player;
+            if (!player.ready()) return;
             untracked(() => this.progress.start(player.lesson));
             if (player.isLast() && player.done()) {
                 untracked(() => this.progress.complete(player.lesson));

@@ -1,7 +1,6 @@
 import { Injectable, signal } from '@angular/core';
+import { LessonState } from '../enums/lesson-state';
 import { Lesson } from '../models/lesson';
-
-export type LessonState = 'notStarted' | 'inProgress' | 'completed';
 
 const STORAGE_KEY = 'git-explained.lessons';
 
@@ -11,54 +10,30 @@ export class ProgressService {
     private readonly states = signal<Record<string, LessonState>>(this.load());
 
     state(lesson: Lesson): LessonState {
-        return this.states()[lesson.id] ?? 'notStarted';
-    }
-
-    /** The status line under a lesson title. */
-    label(lesson: Lesson): string {
-        switch (this.state(lesson)) {
-            case 'completed':
-                return 'Completed';
-            case 'inProgress':
-                return 'In progress';
-            default:
-                return 'Not started';
-        }
-    }
-
-    /** Text classes for a lesson's number and status line. Magenta while in progress, blue once done. */
-    colors(lesson: Lesson): { number: string; status: string } {
-        switch (this.state(lesson)) {
-            case 'completed':
-                return { number: 'text-primary', status: 'text-primary-700' };
-            case 'inProgress':
-                return { number: 'text-magenta', status: 'text-magenta-700' };
-            default:
-                return { number: '', status: 'text-muted-color' };
-        }
+        return this.states()[lesson.id] ?? LessonState.NotStarted;
     }
 
     hasStarted(lessons: Lesson[]): boolean {
-        return lessons.some((l) => this.state(l) !== 'notStarted');
+        return lessons.some((l) => this.state(l) !== LessonState.NotStarted);
     }
 
     /** The lesson in progress, else the first one you haven't finished, else lesson 1. */
     nextLesson(lessons: Lesson[]): Lesson {
         return (
-            lessons.find((l) => this.state(l) === 'inProgress') ??
-            lessons.find((l) => this.state(l) !== 'completed') ??
+            lessons.find((l) => this.state(l) === LessonState.InProgress) ??
+            lessons.find((l) => this.state(l) !== LessonState.Completed) ??
             lessons[0]
         );
     }
 
     /** Call when a lesson opens. Reopening a completed lesson keeps it completed. */
     start(lesson: Lesson): void {
-        if (this.state(lesson) === 'notStarted') this.set(lesson, 'inProgress');
+        if (this.state(lesson) === LessonState.NotStarted) this.set(lesson, LessonState.InProgress);
     }
 
     /** Call when you finish the last step. */
     complete(lesson: Lesson): void {
-        this.set(lesson, 'completed');
+        this.set(lesson, LessonState.Completed);
     }
 
     private set(lesson: Lesson, state: LessonState): void {
@@ -70,9 +45,15 @@ export class ProgressService {
         }
     }
 
+    /** Keeps only the saved values that are still a LessonState. */
     private load(): Record<string, LessonState> {
         try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}') ?? {};
+            const saved: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}');
+            if (!saved || typeof saved !== 'object') return {};
+            const states = Object.values(LessonState) as unknown[];
+            return Object.fromEntries(
+                Object.entries(saved).filter(([, state]) => states.includes(state)),
+            );
         } catch {
             return {};
         }

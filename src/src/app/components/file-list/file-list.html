@@ -6,7 +6,7 @@
         >
             <div class="flex min-h-8 items-center justify-between gap-3">
                 <span class="truncate">{{ file.name }}</span>
-                @if (player(); as p) {
+                @if (types().length) {
                     <span class="flex shrink-0">
                         @for (type of types(); track type) {
                             <button
@@ -15,12 +15,12 @@
                                 size="small"
                                 [text]="true"
                                 [rounded]="true"
-                                [attr.aria-label]="icons[type].label + ' ' + file.name"
-                                [pTooltip]="icons[type].label + '. ' + icons[type].hint"
+                                [attr.aria-label]="labelOf(icons, type) + ' ' + file.name"
+                                [pTooltip]="labelOf(icons, type) + '. ' + hintOf(icons, type)"
                                 tooltipPosition="top"
                                 severity="secondary"
-                                [disabled]="!p.canPress(type)"
-                                (click)="p.press(type, file.name)"
+                                [disabled]="!player.canPress(type)"
+                                (click)="player.press(type, file.name)"
                             >
                                 <app-file-icon [name]="type" />
                             </button>
@@ -34,7 +34,7 @@
                     <app-file-icon
                         class="size-3"
                         [name]="file.status"
-                        [pTooltip]="icons[file.status].label + '. ' + icons[file.status].hint"
+                        [pTooltip]="labelOf(icons, file.status) + '. ' + hintOf(icons, file.status)"
                         tooltipPosition="top"
                     />
                 }

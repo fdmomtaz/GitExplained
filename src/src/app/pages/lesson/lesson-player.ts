@@ -1,32 +1,52 @@
-import { computed, signal, WritableSignal } from '@angular/core';
-import { Action, ActionType } from '../../models/action';
-import { Workspace } from '../../models/workspace';
+import { computed, Injectable, linkedSignal, Signal, signal } from '@angular/core';
+import { ActionType } from '../../enums/action-type';
+import { Action } from '../../models/action';
 import { Lesson } from '../../models/lesson';
+import { Workspace } from '../../models/workspace';
 import { apply, stateAt } from '../../services/workspace-engine';
 
 /** Buttons that work on any file at any time, the way they do in a real folder. */
-const ALWAYS_ON: ActionType[] = ['edit', 'delete', 'newFile'];
+const ALWAYS_ON = [ActionType.Edit, ActionType.Delete, ActionType.NewFile];
 
-/** Plays one lesson. The lesson page makes a new player whenever the lesson changes. */
+/**
+ * Plays one lesson. The lesson page provides it, and the workspace parts inject it.
+ * Every step's state starts over whenever the page hands it a different lesson.
+ */
+@Injectable()
 export class LessonPlayer {
-    readonly index = signal(0);
+    private readonly source = signal<Signal<Lesson | undefined>>(signal(undefined));
+    private readonly current = computed(() => this.source()());
+
+    /** A lesson with steps is loaded. Read `lesson` and the rest only once this is true. */
+    readonly ready = computed(() => !!this.current());
+
+    readonly index = linkedSignal({ source: this.current, computation: () => 0 });
     /** How many steps are done. Steps up to this one can be opened. */
-    readonly doneCount = signal(0);
-    readonly workspace: WritableSignal<Workspace>;
+    readonly doneCount = linkedSignal({ source: this.current, computation: () => 0 });
+    readonly workspace = linkedSignal(() => this.lesson.workspace);
     /** The step's actions you haven't done yet. */
-    readonly remaining: WritableSignal<Action[]>;
+    readonly remaining = linkedSignal(() => this.lesson.steps[0].actions);
     /** You pressed the button the step asks for on the wrong file. Only Reset step helps now. */
-    readonly wrong = signal(false);
+    readonly wrong = linkedSignal({ source: this.current, computation: () => false });
     /** The file your last asked for press changed, so the workspace can point at it. */
-    readonly touched = signal<string | undefined>(undefined);
+    readonly touched = linkedSignal<Lesson | undefined, string | undefined>({
+        source: this.current,
+        computation: () => undefined,
+    });
 
     readonly step = computed(() => this.lesson.steps[this.index()]);
     readonly done = computed(() => this.index() < this.doneCount());
     readonly isLast = computed(() => this.index() === this.lesson.steps.length - 1);
 
-    constructor(readonly lesson: Lesson) {
-        this.workspace = signal(lesson.workspace);
-        this.remaining = signal(lesson.steps[0].actions);
+    get lesson(): Lesson {
+        const lesson = this.current();
+        if (!lesson) throw new Error('LessonPlayer has no lesson with steps loaded');
+        return lesson;
+    }
+
+    /** Plays whatever lesson `lesson` points to. Undefined, or a draft with no steps, plays nothing. */
+    play(lesson: Signal<Lesson | undefined>): void {
+        this.source.set(computed(() => (lesson()?.steps.length ? lesson() : undefined)));
     }
 
     /** The step still asks for this button. */
@@ -79,7 +99,7 @@ export class LessonPlayer {
 }
 
 function freeMove(ws: Workspace, type: ActionType, file: string): Action {
-    if (type === 'newFile') return { type, file, content: '' };
-    if (type !== 'edit') return { type, file } as Action;
+    if (type === ActionType.NewFile) return { type, file, content: '' };
+    if (type !== ActionType.Edit) return { type, file } as Action;
     return { type, file, content: ws.files.find((f) => f.name === file)!.content };
 }

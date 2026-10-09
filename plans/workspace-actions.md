@@ -89,16 +89,19 @@ Move the teaching sentence from the 1.1 and lesson 4 wrong moves into those step
 
 ### Action enums
 
-- Add `enums/action-type.ts` with an `ActionType` enum for all 26 actions, next to `FileStatus` and `TextType`.
-- Next to it, a `BUTTON` table maps each action to its exact button name, like `EXTENSION` did for file types. It replaces `LABELS` in the action bar and the labels in `ICONS`, and the notes use it ("Your task asks for Commit").
-- `FileActionType` becomes a union of enum members, `ActionType.Edit | ActionType.Delete | ActionType.Stage | ActionType.Unstage`.
-- Events in `models/workspace-event.ts` get their own `EventType` enum (Push, Comment, Approve, MergePullRequest), so what you press stays apart from what others do.
-- Templates that pass `['push']` or `@case ('edit')` expose the enum from their component.
-- Add a spec check that every step's task names the button of each action it lists.
+Done, a little differently than first planned.
+
+- `enums/action-type.ts` has an `ActionType` enum for all 27 actions. `ActionTypeOptions` next to it gives each one its exact button name, and the file row buttons also get the hint for their tooltip. `labelOf` and `hintOf` in `enums/converter.ts` read them. This replaced the `BUTTON` table idea, `LABELS` in the old action bar, and the labels in `ICONS`. The notes can use `labelOf` too ("Your task asks for Commit").
+- `FileStatus` got `FileStatusOptions` the same way, and `LessonState` is an enum with `LessonStateOptions`. A spec checks that every enum value has exactly one option.
+- `FileActionType` and `IconName` are gone. File rows take a list of `ActionType`, and icons take `ActionType | FileStatus`.
+- Events use `WorkspaceEventType` (Push, Comment, Approve, MergePullRequest), and their target uses `Remote` (Origin, Upstream).
+- `Action` and `WorkspaceEvent` stay union types, because each kind carries different fields. Their `type` fields use the enums.
+- The player is a service the lesson page provides, and the workspace parts inject it. `ActionBar` became `ActionButton`, one button per place, and the headings sit in the workspace template.
+- Still to do, a spec check that every step's task names the button of each action it lists.
 
 ## Order of work
 
-1. `ActionType`, `BUTTON`, and `EventType`, plus the task check in the spec.
+1. The task check in the spec. The enums themselves are done.
 2. Remove `wrongMove` and move its teaching lines into the step text.
 3. The press check with the three outcomes, the dry run, and the notes. Make every button pressable. This fixes bugs 2 and 4 on the way, since an extra Edit should only mark a file Changed when its text differs.
 4. A commit message box that supports typing (2.2) and picking (2.4).

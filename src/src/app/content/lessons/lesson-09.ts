@@ -1,3 +1,4 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
@@ -337,7 +338,7 @@ export const lesson09: Lesson = {
             // Check. Your oat milk snapshot is in local history.
             actions: [
                 {
-                    type: 'edit',
+                    type: ActionType.Edit,
                     file: 'pancakes',
                     content: lines(
                         'Pancakes',
@@ -350,8 +351,8 @@ export const lesson09: Lesson = {
                         'Serves 4',
                     ),
                 },
-                { type: 'stage', file: 'pancakes' },
-                { type: 'commit', message: 'Use oat milk' },
+                { type: ActionType.Stage, file: 'pancakes' },
+                { type: ActionType.Commit, message: 'Use oat milk' },
             ],
         },
         {
@@ -373,7 +374,7 @@ export const lesson09: Lesson = {
             // Workspace. pancakes shows both versions of the milk line, yours and Sam's, one above the other.
             actions: [
                 {
-                    type: 'pull',
+                    type: ActionType.Pull,
                     files: [
                         {
                             name: 'pancakes',
@@ -458,7 +459,7 @@ export const lesson09: Lesson = {
             // Check. pancakes no longer shows Conflict, and it's staged.
             actions: [
                 {
-                    type: 'resolve',
+                    type: ActionType.Resolve,
                     file: 'pancakes',
                     content: lines(
                         'Pancakes',
@@ -489,7 +490,10 @@ export const lesson09: Lesson = {
             task: 'Press Commit, then press Push.',
             done: "Origin has your answer. History shows your milk, Sam's milk, and the one you kept, so nobody has to argue about it twice.",
             // Check. Origin has the snapshot with your answer.
-            actions: [{ type: 'commit', message: 'Settle the milk wars' }, { type: 'push' }],
+            actions: [
+                { type: ActionType.Commit, message: 'Settle the milk wars' },
+                { type: ActionType.Push },
+            ],
         },
     ],
 };

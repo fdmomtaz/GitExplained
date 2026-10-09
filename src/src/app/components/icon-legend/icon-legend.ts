@@ -1,5 +1,8 @@
 import { Component, input } from '@angular/core';
-import { FileIcon, ICONS, IconName } from '../file-icon/file-icon';
+import { ActionType } from '../../enums/action-type';
+import { hintOf, labelOf } from '../../enums/converter';
+import { FileStatus } from '../../enums/file-status';
+import { FileIcon, ICON_OPTIONS } from '../file-icon/file-icon';
 
 /** Explains the icons the workspace is showing. */
 @Component({
@@ -8,7 +11,9 @@ import { FileIcon, ICONS, IconName } from '../file-icon/file-icon';
     templateUrl: './icon-legend.html',
 })
 export class IconLegend {
-    readonly names = input.required<IconName[]>();
+    readonly names = input.required<(ActionType | FileStatus)[]>();
 
-    protected readonly icons = ICONS;
+    protected readonly icons = ICON_OPTIONS;
+    protected readonly labelOf = labelOf;
+    protected readonly hintOf = hintOf;
 }

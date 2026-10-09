@@ -6,33 +6,20 @@ import { InfoCircleIcon } from '@openng/optimus-ui/icons/infocircle';
 import { PencilIcon } from '@openng/optimus-ui/icons/pencil';
 import { PlusIcon } from '@openng/optimus-ui/icons/plus';
 import { TrashIcon } from '@openng/optimus-ui/icons/trash';
-import { FileStatus } from '../../enums/file-status';
-import { FileActionType } from '../../models/action';
+import { ActionType, ActionTypeOptions } from '../../enums/action-type';
+import { EnumOption } from '../../enums/converter';
+import { FileStatus, FileStatusOptions } from '../../enums/file-status';
 
-/** Every icon a file row can show, its buttons first and then its statuses. */
-export type IconName = FileActionType | FileStatus.Changed | FileStatus.New | FileStatus.Conflict;
+/** Every icon a file row can show, its buttons and its statuses. Tooltips and the legend use these names and hints. */
+export const ICON_OPTIONS: EnumOption<ActionType | FileStatus>[] = [
+    ...ActionTypeOptions,
+    ...FileStatusOptions,
+];
 
-/** What each icon is called and what it does or means. Tooltips and the legend both use it. */
-export const ICONS: Record<IconName, { label: string; hint: string; color?: string }> = {
-    edit: { label: 'Edit', hint: 'Change what is in this file.' },
-    delete: { label: 'Delete', hint: 'Remove this file from the folder.' },
-    stage: { label: 'Stage', hint: 'Pick this change for your next snapshot.' },
-    unstage: { label: 'Unstage', hint: 'Leave this change out of your next snapshot.' },
-    [FileStatus.Changed]: {
-        label: 'Changed',
-        hint: 'Git sees that this file is different from the last snapshot.',
-        color: 'text-primary',
-    },
-    [FileStatus.New]: {
-        label: 'New',
-        hint: 'Git has never saved this file.',
-        color: 'text-green-600',
-    },
-    [FileStatus.Conflict]: {
-        label: 'Conflict',
-        hint: 'Two changes touch the same lines. You pick which one to keep.',
-        color: 'text-red-600',
-    },
+const COLORS: Partial<Record<ActionType | FileStatus, string>> = {
+    [FileStatus.Changed]: 'text-primary',
+    [FileStatus.New]: 'text-green-600',
+    [FileStatus.Conflict]: 'text-red-600',
 };
 
 @Component({
@@ -50,7 +37,9 @@ export const ICONS: Record<IconName, { label: string; hint: string; color?: stri
     templateUrl: './file-icon.html',
 })
 export class FileIcon {
-    readonly name = input.required<IconName>();
+    readonly name = input.required<ActionType | FileStatus>();
 
-    protected readonly color = computed(() => ICONS[this.name()].color ?? '');
+    protected readonly ActionType = ActionType;
+    protected readonly FileStatus = FileStatus;
+    protected readonly color = computed(() => COLORS[this.name()] ?? '');
 }

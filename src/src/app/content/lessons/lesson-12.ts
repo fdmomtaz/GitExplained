@@ -1,3 +1,4 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
@@ -422,7 +423,7 @@ export const lesson12: Lesson = {
             task: 'Press Ignore on the notes file.',
             done: "The notes file turned grey, and Stage won't work on it anymore. The box mix secret is safe for good.",
             // Check. notes shows Ignored and can't be staged.
-            actions: [{ type: 'ignore', file: 'notes' }],
+            actions: [{ type: ActionType.Ignore, file: 'notes' }],
         },
         {
             id: '12.2',
@@ -440,7 +441,7 @@ export const lesson12: Lesson = {
             task: 'Click your latest snapshot, press New tag, and name it Summer edition.',
             done: 'Summer edition sits on your latest snapshot. A branch moves forward every time you commit, but a tag never moves.',
             // Check. The Summer edition tag shows on your latest snapshot.
-            actions: [{ type: 'newTag', name: 'Summer edition' }],
+            actions: [{ type: ActionType.NewTag, name: 'Summer edition' }],
         },
         {
             id: '12.3',
@@ -458,7 +459,7 @@ export const lesson12: Lesson = {
             task: 'Press Push.',
             done: 'Origin shows a Summer edition release. Your family can grab this version of the recipe book, even after you add 40 more recipes.',
             // Check. Origin shows a Summer edition release.
-            actions: [{ type: 'push' }],
+            actions: [{ type: ActionType.Push }],
         },
         {
             id: '12.4',
@@ -476,7 +477,7 @@ export const lesson12: Lesson = {
             task: 'Click each Git word, then click what it means in plain words.',
             done: "All 8 match. You can now explain Git to a friend. Honestly, that's more than a lot of people who use Git every day can do.",
             // Check. All 8 pairs match. The words are repository, commit, stage, push, pull, branch, merge, and pull request.
-            actions: [{ type: 'matchWords' }],
+            actions: [{ type: ActionType.MatchWords }],
         },
     ],
 };

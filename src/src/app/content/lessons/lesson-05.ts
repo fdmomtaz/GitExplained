@@ -1,3 +1,4 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
@@ -132,7 +133,7 @@ export const lesson05: Lesson = {
             task: 'Press Connect to GitHub.',
             done: 'Origin is connected and completely empty. Connecting only makes the link. Nothing moves until you send it.',
             // Check. Origin is connected and has no snapshots.
-            actions: [{ type: 'connect' }],
+            actions: [{ type: ActionType.Connect }],
         },
         {
             id: '5.2',
@@ -150,7 +151,7 @@ export const lesson05: Lesson = {
             task: 'Press Push.',
             done: 'Origin now has all six snapshots, salt incident included. Anyone with access can read the whole history of the recipe book.',
             // Check. Origin history matches local history.
-            actions: [{ type: 'push' }],
+            actions: [{ type: ActionType.Push }],
         },
         {
             id: '5.3',
@@ -174,7 +175,7 @@ export const lesson05: Lesson = {
             // Check. Snapshot 7 is in local history and not on origin.
             actions: [
                 {
-                    type: 'edit',
+                    type: ActionType.Edit,
                     file: 'cookies',
                     content: lines(
                         'Cookies',
@@ -184,8 +185,8 @@ export const lesson05: Lesson = {
                         '1 cup of chocolate chips',
                     ),
                 },
-                { type: 'stage', file: 'cookies' },
-                { type: 'commit', message: 'Add chocolate chips' },
+                { type: ActionType.Stage, file: 'cookies' },
+                { type: ActionType.Commit, message: 'Add chocolate chips' },
             ],
         },
         {
@@ -204,7 +205,7 @@ export const lesson05: Lesson = {
             task: 'Press Push.',
             done: "Origin has Snapshot 7 too, and ahead drops back to 0. Commit as often as you like, and push when you're ready to share.",
             // Check. Origin history matches local history again.
-            actions: [{ type: 'push' }],
+            actions: [{ type: ActionType.Push }],
         },
     ],
 };

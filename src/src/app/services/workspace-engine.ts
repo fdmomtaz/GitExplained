@@ -1,3 +1,4 @@
+import { ActionType } from '../enums/action-type';
 import { FileStatus } from '../enums/file-status';
 import { Action } from '../models/action';
 import { Lesson } from '../models/lesson';
@@ -15,10 +16,10 @@ export function stateAt(lesson: Lesson, index: number, done: boolean): Workspace
 /** The workspace after one button press. It mimics Git and only covers the buttons the lessons use so far. */
 export function apply(ws: Workspace, action: Action): Workspace {
     switch (action.type) {
-        case 'delete':
+        case ActionType.Delete:
             find(ws, action.file);
             return { ...ws, files: ws.files.filter((f) => f.name !== action.file) };
-        case 'edit': {
+        case ActionType.Edit: {
             // Before Start tracking nothing watches the folder, so nothing gets marked.
             const status = find(ws, action.file).status;
             const watched = ws.history && status !== FileStatus.New;
@@ -27,7 +28,7 @@ export function apply(ws: Workspace, action: Action): Workspace {
                 status: watched ? FileStatus.Changed : status,
             });
         }
-        case 'newFile': {
+        case ActionType.NewFile: {
             if (ws.files.some((f) => f.name === action.file)) {
                 throw new Error(`There's already a file called ${action.file}`);
             }
@@ -41,18 +42,18 @@ export function apply(ws: Workspace, action: Action): Workspace {
             };
             return { ...ws, files: [...ws.files, file] };
         }
-        case 'stage':
+        case ActionType.Stage:
             return update(ws, action.file, { staged: true });
-        case 'unstage':
+        case ActionType.Unstage:
             return update(ws, action.file, { staged: false });
-        case 'startTracking':
+        case ActionType.StartTracking:
             return commit({ ...ws, history: [] }, action.message);
-        case 'commit':
+        case ActionType.Commit:
             if (!ws.history) throw new Error('Commit needs Start tracking first');
             return commit(ws, action.message);
-        case 'connect':
+        case ActionType.Connect:
             return { ...ws, origin: { label: 'Origin', files: [], history: [], pullRequests: [] } };
-        case 'push':
+        case ActionType.Push:
             if (!ws.origin || !ws.history) throw new Error('Push needs history and origin');
             return {
                 ...ws,

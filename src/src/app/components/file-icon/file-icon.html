@@ -1,23 +1,23 @@
 @switch (name()) {
-    @case ('edit') {
+    @case (ActionType.Edit) {
         <svg data-p-icon="pencil"></svg>
     }
-    @case ('delete') {
+    @case (ActionType.Delete) {
         <svg data-p-icon="trash"></svg>
     }
-    @case ('stage') {
+    @case (ActionType.Stage) {
         <svg data-p-icon="arrow-up"></svg>
     }
-    @case ('unstage') {
+    @case (ActionType.Unstage) {
         <svg data-p-icon="arrow-down"></svg>
     }
-    @case ('changed') {
+    @case (FileStatus.Changed) {
         <svg data-p-icon="info-circle"></svg>
     }
-    @case ('new') {
+    @case (FileStatus.New) {
         <svg data-p-icon="plus"></svg>
     }
-    @case ('conflict') {
+    @case (FileStatus.Conflict) {
         <svg data-p-icon="exclamation-triangle"></svg>
     }
 }

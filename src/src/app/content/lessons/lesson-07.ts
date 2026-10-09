@@ -1,3 +1,4 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
@@ -298,7 +299,7 @@ export const lesson07: Lesson = {
             task: 'Press New branch and name it vegan.',
             done: 'vegan starts at your latest snapshot. Right now it matches main, but not for long.',
             // Check. A vegan branch starts from your latest snapshot.
-            actions: [{ type: 'newBranch', branch: 'vegan' }],
+            actions: [{ type: ActionType.NewBranch, branch: 'vegan' }],
         },
         {
             id: '7.2',
@@ -318,7 +319,7 @@ export const lesson07: Lesson = {
             // Check. Your current branch is vegan.
             actions: [
                 {
-                    type: 'switch',
+                    type: ActionType.Switch,
                     branch: 'vegan',
                     files: [
                         {
@@ -398,7 +399,7 @@ export const lesson07: Lesson = {
             // Check. The new snapshot is on vegan only.
             actions: [
                 {
-                    type: 'edit',
+                    type: ActionType.Edit,
                     file: 'pancakes',
                     content: lines(
                         'Pancakes',
@@ -410,8 +411,8 @@ export const lesson07: Lesson = {
                         '1 spoon of maple syrup',
                     ),
                 },
-                { type: 'stage', file: 'pancakes' },
-                { type: 'commit', message: 'Swap the egg for a banana' },
+                { type: ActionType.Stage, file: 'pancakes' },
+                { type: ActionType.Commit, message: 'Swap the egg for a banana' },
             ],
         },
         {
@@ -430,7 +431,7 @@ export const lesson07: Lesson = {
             task: 'Press Push.',
             done: 'Origin shows vegan next to main. Sam can now judge your banana pancakes, which is a little scary.',
             // Check. Origin shows a vegan branch next to main.
-            actions: [{ type: 'push' }],
+            actions: [{ type: ActionType.Push }],
         },
         {
             id: '7.5',
@@ -450,7 +451,7 @@ export const lesson07: Lesson = {
             // Check. Your current branch is main, and pancakes has the egg again.
             actions: [
                 {
-                    type: 'switch',
+                    type: ActionType.Switch,
                     branch: 'main',
                     files: [
                         {

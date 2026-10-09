@@ -1,3 +1,4 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
@@ -307,7 +308,7 @@ export const lesson08: Lesson = {
             // Check. main has a snapshot that vegan doesn't have.
             actions: [
                 {
-                    type: 'pull',
+                    type: ActionType.Pull,
                     files: [
                         {
                             name: 'pancakes',
@@ -391,7 +392,7 @@ export const lesson08: Lesson = {
             // Check. A merge snapshot joins the two lines, and pancakes has the banana and the serving size.
             actions: [
                 {
-                    type: 'merge',
+                    type: ActionType.Merge,
                     branch: 'vegan',
                     message: 'Merge vegan into main',
                     files: [
@@ -471,7 +472,7 @@ export const lesson08: Lesson = {
             task: 'Press Delete branch on vegan.',
             done: "vegan is gone from the list, and its banana snapshot is still in main's history. Teams delete finished branches all the time to keep the list short.",
             // Check. The vegan branch is gone, and its snapshots are still in main.
-            actions: [{ type: 'deleteBranch', branch: 'vegan' }],
+            actions: [{ type: ActionType.DeleteBranch, branch: 'vegan' }],
         },
         {
             id: '8.4',
@@ -489,7 +490,7 @@ export const lesson08: Lesson = {
             task: 'Press Push.',
             done: 'Origin main has the vegan pancakes. Tomorrow morning, Sam pulls and finds bananas at breakfast.',
             // Check. Origin main has the merge snapshot.
-            actions: [{ type: 'push' }],
+            actions: [{ type: ActionType.Push }],
         },
     ],
 };

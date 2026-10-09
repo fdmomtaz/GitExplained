@@ -1,3 +1,4 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
@@ -78,7 +79,7 @@ export const lesson02: Lesson = {
             // Check. pancakes shows Changed.
             actions: [
                 {
-                    type: 'edit',
+                    type: ActionType.Edit,
                     file: 'pancakes',
                     content: lines(
                         'Pancakes',
@@ -107,7 +108,7 @@ export const lesson02: Lesson = {
             task: 'Press Commit and type a message, like Add blueberries and milk.',
             done: "Saved. Both edits went into one snapshot, because Commit grabs everything that changed. Sometimes you won't want that, and lesson 3 shows you how to pick.",
             // Check. Snapshot 2 is in local history, and pancakes and groceries show Unchanged.
-            actions: [{ type: 'commit', message: 'Add blueberries and milk' }],
+            actions: [{ type: ActionType.Commit, message: 'Add blueberries and milk' }],
         },
         {
             id: '2.3',
@@ -131,7 +132,7 @@ export const lesson02: Lesson = {
             // Check. cookies shows New.
             actions: [
                 {
-                    type: 'newFile',
+                    type: ActionType.NewFile,
                     file: 'cookies',
                     content: lines('Cookies', '2 cups flour', '1 cup butter', '1 cup sugar'),
                 },
@@ -159,7 +160,7 @@ export const lesson02: Lesson = {
             wrongMove:
                 "That doesn't say what changed. Future you won't find anything with it. Press Reset step and pick again.",
             // Check. Snapshot 3 says Add cookie recipe, and cookies shows Unchanged. The other choices are "stuff" and "Update files".
-            actions: [{ type: 'commit', message: 'Add cookie recipe' }],
+            actions: [{ type: ActionType.Commit, message: 'Add cookie recipe' }],
         },
     ],
 };
