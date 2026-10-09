@@ -4,6 +4,50 @@
 /* Broadsheet type, see app/theme/broadsheet.ts for the colors. */
 @theme {
     --font-sans: 'Source Serif 4', system-ui, serif;
+
+    /* Broadsheet's second accent, for the step you're on and the done cheer. */
+    --color-magenta: #d6006c;
+    --color-magenta-700: #aa0b56;
+
+    --animate-pop: pop 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+    --animate-rise: rise 0.4s ease-out both;
+    --animate-glow: glow 1.6s ease-in-out infinite;
+
+    /* The done tick pops in. */
+    @keyframes pop {
+        0% {
+            transform: scale(0.4);
+            opacity: 0;
+        }
+        65% {
+            transform: scale(1.15);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    /* The done message and the file you just changed slide up into place. */
+    @keyframes rise {
+        0% {
+            transform: translateY(14px) scale(0.97);
+            opacity: 0;
+        }
+        100% {
+            transform: none;
+            opacity: 1;
+        }
+    }
+    /* The button the task asks for breathes. */
+    @keyframes glow {
+        0%,
+        100% {
+            box-shadow: 0 0 0 4px var(--p-primary-200);
+        }
+        50% {
+            box-shadow: 0 0 0 10px var(--p-primary-100);
+        }
+    }
 }
 
 @layer base {

@@ -1,8 +1,8 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson05: Lesson = {
     id: 'sending-to-origin',
@@ -33,7 +33,7 @@ export const lesson05: Lesson = {
         files: [
             {
                 name: 'pancakes',
-                content: doc(
+                content: lines(
                     'Pancakes',
                     '1 egg',
                     '1 cup flour',
@@ -42,31 +42,27 @@ export const lesson05: Lesson = {
                     '1 handful of blueberries',
                     '1 spoon of maple syrup',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'groceries',
-                content: 'eggs\nflour\nbutter\nmilk\n',
-                type: FileType.Txt,
+                content: lines('eggs', 'flour', 'butter', 'milk'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'cookies',
-                content: doc('Cookies', '2 cups flour', '1 cup butter', '1 cup sugar'),
-                type: FileType.Doc,
+                content: lines('Cookies', '2 cups flour', '1 cup butter', '1 cup sugar'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'notes',
-                content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                type: FileType.Txt,
+                content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.New,
                 staged: false,
@@ -137,7 +133,7 @@ export const lesson05: Lesson = {
             task: 'Press Connect to GitHub.',
             done: 'Origin is connected and completely empty. Connecting only makes the link. Nothing moves until you send it.',
             // Check. Origin is connected and has no snapshots.
-            actions: [{ type: 'connect' }],
+            actions: [{ type: ActionType.Connect }],
         },
         {
             id: '5.2',
@@ -155,7 +151,7 @@ export const lesson05: Lesson = {
             task: 'Press Push.',
             done: 'Origin now has all six snapshots, salt incident included. Anyone with access can read the whole history of the recipe book.',
             // Check. Origin history matches local history.
-            actions: [{ type: 'push' }],
+            actions: [{ type: ActionType.Push }],
         },
         {
             id: '5.3',
@@ -174,14 +170,14 @@ export const lesson05: Lesson = {
                     text: "Git never syncs on its own. Ahead counts the snapshots you have that origin doesn't. The command git status tells you how far ahead you are.",
                 },
             ],
-            task: 'Press Edit to add chocolate chips to cookies.md, then stage it and commit.',
+            task: 'Press Edit to add chocolate chips to the cookies file, then stage it and commit.',
             done: "Snapshot 7 is in your local history, but origin still has six. Local history says 1 ahead, which means you have a snapshot origin doesn't.",
             // Check. Snapshot 7 is in local history and not on origin.
             actions: [
                 {
-                    type: 'edit',
+                    type: ActionType.Edit,
                     file: 'cookies',
-                    content: doc(
+                    content: lines(
                         'Cookies',
                         '2 cups flour',
                         '1 cup butter',
@@ -189,8 +185,8 @@ export const lesson05: Lesson = {
                         '1 cup of chocolate chips',
                     ),
                 },
-                { type: 'stage', file: 'cookies' },
-                { type: 'commit', message: 'Add chocolate chips' },
+                { type: ActionType.Stage, file: 'cookies' },
+                { type: ActionType.Commit, message: 'Add chocolate chips' },
             ],
         },
         {
@@ -209,7 +205,7 @@ export const lesson05: Lesson = {
             task: 'Press Push.',
             done: "Origin has Snapshot 7 too, and ahead drops back to 0. Commit as often as you like, and push when you're ready to share.",
             // Check. Origin history matches local history again.
-            actions: [{ type: 'push' }],
+            actions: [{ type: ActionType.Push }],
         },
     ],
 };

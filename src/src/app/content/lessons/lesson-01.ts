@@ -1,8 +1,8 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson01: Lesson = {
     id: 'what-is-a-repository',
@@ -22,32 +22,28 @@ export const lesson01: Lesson = {
         files: [
             {
                 name: 'pancakes final',
-                content: doc('Pancakes', '1 egg', '1 cup flour'),
-                type: FileType.Doc,
+                content: lines('Pancakes', '1 egg', '1 cup flour'),
                 modifiedOn: '2026-09-28',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'pancakes final v2',
-                content: doc('Pancakes', '1 egg', '1 cup flour', '1 cup milk'),
-                type: FileType.Doc,
+                content: lines('Pancakes', '1 egg', '1 cup flour', '1 cup milk'),
                 modifiedOn: '2026-09-30',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'pancakes',
-                content: doc('Pancakes', '1 egg', '1 cup flour', '1 cup milk', '1 pinch of salt'),
-                type: FileType.Doc,
+                content: lines('Pancakes', '1 egg', '1 cup flour', '1 cup milk', '1 pinch of salt'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'groceries',
-                content: 'eggs\nflour\nbutter\n',
-                type: FileType.Txt,
+                content: lines('eggs', 'flour', 'butter'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
@@ -82,10 +78,10 @@ export const lesson01: Lesson = {
             done: "Well, who knew. The file called final wasn't the final version, and v2 wasn't either. Git ends this game for good. It keeps one file and remembers every version of it for you.",
             wrongMove:
                 'Oops, that was the newest one. In a normal folder, deleted means gone for good, which is the problem Git solves. Press Reset step and try again.',
-            // Check. pancakes final.md and pancakes final v2.md are gone, and pancakes.md is still there.
+            // Check. pancakes final and pancakes final v2 are gone, and pancakes is still there.
             actions: [
-                { type: 'delete', file: 'pancakes final' },
-                { type: 'delete', file: 'pancakes final v2' },
+                { type: ActionType.Delete, file: 'pancakes final' },
+                { type: ActionType.Delete, file: 'pancakes final v2' },
             ],
         },
         {
@@ -106,7 +102,7 @@ export const lesson01: Lesson = {
             done: "That's Snapshot 1. Your folder is now called working files, and local history keeps your snapshots next to it. Whatever you break from here on, you can always get back to this moment. So go ahead and break things.",
             // Check. The repository exists and local history holds Snapshot 1.
             // Workspace. Your folder becomes working files. Local history slides in next to it with one snapshot, called Start of the recipe book.
-            actions: [{ type: 'startTracking', message: 'Start of the recipe book' }],
+            actions: [{ type: ActionType.StartTracking, message: 'Start of the recipe book' }],
         },
         {
             id: '1.3',
@@ -125,10 +121,16 @@ export const lesson01: Lesson = {
                     text: 'Test it. The shopping list is missing something important.',
                 },
             ],
-            task: 'Press Edit to add milk to groceries.txt.',
-            done: "Caught. Git marked groceries.txt as Changed, but it didn't save a thing. Git notices everything and saves nothing until you say so. That's the next lesson.",
-            // Check. groceries.txt shows Changed.
-            actions: [{ type: 'edit', file: 'groceries', content: 'eggs\nflour\nbutter\nmilk\n' }],
+            task: 'Press Edit to add milk to the groceries file.',
+            done: "Caught. Git marked the groceries file as Changed, but it didn't save a thing. Git notices everything and saves nothing until you say so. That's the next lesson.",
+            // Check. groceries shows Changed.
+            actions: [
+                {
+                    type: ActionType.Edit,
+                    file: 'groceries',
+                    content: lines('eggs', 'flour', 'butter', 'milk'),
+                },
+            ],
         },
     ],
 };

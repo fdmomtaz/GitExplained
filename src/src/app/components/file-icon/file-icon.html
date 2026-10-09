@@ -1,0 +1,23 @@
+@switch (name()) {
+    @case (ActionType.Edit) {
+        <svg data-p-icon="pencil"></svg>
+    }
+    @case (ActionType.Delete) {
+        <svg data-p-icon="trash"></svg>
+    }
+    @case (ActionType.Stage) {
+        <svg data-p-icon="arrow-up"></svg>
+    }
+    @case (ActionType.Unstage) {
+        <svg data-p-icon="arrow-down"></svg>
+    }
+    @case (FileStatus.Changed) {
+        <svg data-p-icon="info-circle"></svg>
+    }
+    @case (FileStatus.New) {
+        <svg data-p-icon="plus"></svg>
+    }
+    @case (FileStatus.Conflict) {
+        <svg data-p-icon="exclamation-triangle"></svg>
+    }
+}

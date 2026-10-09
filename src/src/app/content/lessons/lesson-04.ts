@@ -1,8 +1,8 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson04: Lesson = {
     id: 'going-back-in-time',
@@ -28,7 +28,7 @@ export const lesson04: Lesson = {
         files: [
             {
                 name: 'pancakes',
-                content: doc(
+                content: lines(
                     'Pancakes',
                     '1 egg',
                     '1 cup flour',
@@ -37,37 +37,33 @@ export const lesson04: Lesson = {
                     '1 handful of blueberries',
                     '1 spoon of maple syrup',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'groceries',
-                content: 'eggs\nflour\nbutter\nmilk\nchoc\n',
-                type: FileType.Txt,
+                content: lines('eggs', 'flour', 'butter', 'milk', 'choc'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Changed,
                 staged: false,
             },
             {
                 name: 'cookies',
-                content: doc(
+                content: lines(
                     'Cookies',
                     '2 cups flour',
                     '1 cup butter',
                     '1 cup sugar',
                     '10 cups of salt',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'notes',
-                content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                type: FileType.Txt,
+                content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.New,
                 staged: false,
@@ -134,12 +130,12 @@ export const lesson04: Lesson = {
             // Workspace. Working files switch to Snapshot 2's version, with a note that says Viewing Snapshot 2.
             actions: [
                 {
-                    type: 'view',
+                    type: ActionType.View,
                     snapshot: '2',
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 egg',
                                 '1 cup flour',
@@ -147,23 +143,20 @@ export const lesson04: Lesson = {
                                 '1 pinch of salt',
                                 '1 handful of blueberries',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'notes',
-                            content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                            type: FileType.Txt,
+                            content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.New,
                             staged: false,
@@ -190,11 +183,11 @@ export const lesson04: Lesson = {
             // Check. Working files show the latest snapshot.
             actions: [
                 {
-                    type: 'backToNow',
+                    type: ActionType.BackToNow,
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 egg',
                                 '1 cup flour',
@@ -203,37 +196,33 @@ export const lesson04: Lesson = {
                                 '1 handful of blueberries',
                                 '1 spoon of maple syrup',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\nchoc\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk', 'choc'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Changed,
                             staged: false,
                         },
                         {
                             name: 'cookies',
-                            content: doc(
+                            content: lines(
                                 'Cookies',
                                 '2 cups flour',
                                 '1 cup butter',
                                 '1 cup sugar',
                                 '10 cups of salt',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'notes',
-                            content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                            type: FileType.Txt,
+                            content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.New,
                             staged: false,
@@ -259,19 +248,19 @@ export const lesson04: Lesson = {
                     text: "The command is git restore. Discard is one of the few moves Git can't undo, since there's no saved copy to go back to. Use it when you're sure.",
                 },
             ],
-            task: 'Press Discard on groceries.txt.',
-            done: 'groceries.txt matches the last snapshot again. That edit is gone for real, because it was never in a snapshot. Git can only bring back what you saved.',
+            task: 'Press Discard on the groceries file.',
+            done: 'The groceries file matches the last snapshot again. That edit is gone for real, because it was never in a snapshot. Git can only bring back what you saved.',
             wrongMove:
-                'notes.txt has never been in a snapshot, so discarding it deletes it for good. Press Reset step and pick groceries.txt.',
-            // Check. groceries.txt shows Unchanged.
+                'The notes file has never been in a snapshot, so discarding it deletes it for good. Press Reset step and pick the groceries file.',
+            // Check. groceries shows Unchanged.
             actions: [
                 {
-                    type: 'discard',
+                    type: ActionType.Discard,
                     file: 'groceries',
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 egg',
                                 '1 cup flour',
@@ -280,37 +269,33 @@ export const lesson04: Lesson = {
                                 '1 handful of blueberries',
                                 '1 spoon of maple syrup',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'cookies',
-                            content: doc(
+                            content: lines(
                                 'Cookies',
                                 '2 cups flour',
                                 '1 cup butter',
                                 '1 cup sugar',
                                 '10 cups of salt',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'notes',
-                            content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                            type: FileType.Txt,
+                            content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.New,
                             staged: false,
@@ -338,16 +323,16 @@ export const lesson04: Lesson = {
             ],
             task: 'Click Snapshot 5 and press Revert.',
             done: 'Snapshot 6 takes the salt back out, and Snapshot 5 is still there. Git never erases history. It fixes mistakes by adding to it.',
-            // Check. Snapshot 6 is in local history, cookies.md has no salt, and Snapshot 5 is still in history.
+            // Check. Snapshot 6 is in local history, cookies has no salt, and Snapshot 5 is still in history.
             actions: [
                 {
-                    type: 'revert',
+                    type: ActionType.Revert,
                     snapshot: '5',
                     message: 'Undo Add 10 cups of salt',
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 egg',
                                 '1 cup flour',
@@ -356,31 +341,32 @@ export const lesson04: Lesson = {
                                 '1 handful of blueberries',
                                 '1 spoon of maple syrup',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'cookies',
-                            content: doc('Cookies', '2 cups flour', '1 cup butter', '1 cup sugar'),
-                            type: FileType.Doc,
+                            content: lines(
+                                'Cookies',
+                                '2 cups flour',
+                                '1 cup butter',
+                                '1 cup sugar',
+                            ),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'notes',
-                            content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                            type: FileType.Txt,
+                            content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.New,
                             staged: false,

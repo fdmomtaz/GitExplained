@@ -1,0 +1,46 @@
+<ul class="flex flex-col">
+    @for (file of files(); track file.name) {
+        <li
+            class="-mx-2.5 flex flex-col rounded-md border-b border-surface-200 px-2.5 py-2 last:border-b-0"
+            [class]="isTouched(file.name) ? 'animate-rise bg-primary-50' : ''"
+        >
+            <div class="flex min-h-8 items-center justify-between gap-3">
+                <span class="truncate">{{ file.name }}</span>
+                @if (types().length) {
+                    <span class="flex shrink-0">
+                        @for (type of types(); track type) {
+                            <button
+                                pButton
+                                type="button"
+                                size="small"
+                                [text]="true"
+                                [rounded]="true"
+                                [attr.aria-label]="labelOf(icons, type) + ' ' + file.name"
+                                [pTooltip]="labelOf(icons, type) + '. ' + hintOf(icons, type)"
+                                tooltipPosition="top"
+                                severity="secondary"
+                                [disabled]="!player.canPress(type)"
+                                (click)="player.press(type, file.name)"
+                            >
+                                <app-file-icon [name]="type" />
+                            </button>
+                        }
+                    </span>
+                }
+            </div>
+            <div class="flex items-center gap-2 text-xs text-muted-color">
+                Modified on {{ file.modifiedOn | date: 'MM/dd/yy' }}
+                @if (file.status !== unchanged && file.status !== ignored) {
+                    <app-file-icon
+                        class="size-3"
+                        [name]="file.status"
+                        [pTooltip]="labelOf(icons, file.status) + '. ' + hintOf(icons, file.status)"
+                        tooltipPosition="top"
+                    />
+                }
+            </div>
+        </li>
+    } @empty {
+        <li class="py-2 text-sm text-muted-color italic">{{ emptyMessage() }}</li>
+    }
+</ul>

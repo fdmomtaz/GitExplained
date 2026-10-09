@@ -1,0 +1,14 @@
+<section class="flex flex-col gap-3">
+    <h6 class="text-sm font-semibold text-muted-color">What the icons mean</h6>
+    <ul class="grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
+        @for (name of names(); track name) {
+            <li class="flex items-start gap-2">
+                <app-file-icon class="mt-1 shrink-0" [name]="name" />
+                <span>
+                    <span class="font-semibold">{{ labelOf(icons, name) }}.</span>
+                    {{ hintOf(icons, name) }}
+                </span>
+            </li>
+        }
+    </ul>
+</section>

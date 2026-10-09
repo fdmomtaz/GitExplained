@@ -1,8 +1,10 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
+import { Remote } from '../../enums/remote';
 import { TextType } from '../../enums/text-type';
+import { WorkspaceEventType } from '../../enums/workspace-event-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson06: Lesson = {
     id: 'getting-updates',
@@ -27,7 +29,7 @@ export const lesson06: Lesson = {
         files: [
             {
                 name: 'pancakes',
-                content: doc(
+                content: lines(
                     'Pancakes',
                     '1 egg',
                     '1 cup flour',
@@ -36,37 +38,33 @@ export const lesson06: Lesson = {
                     '1 handful of blueberries',
                     '1 spoon of maple syrup',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'groceries',
-                content: 'eggs\nflour\nbutter\nmilk\n',
-                type: FileType.Txt,
+                content: lines('eggs', 'flour', 'butter', 'milk'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'cookies',
-                content: doc(
+                content: lines(
                     'Cookies',
                     '2 cups flour',
                     '1 cup butter',
                     '1 cup sugar',
                     '1 cup of chocolate chips',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'notes',
-                content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                type: FileType.Txt,
+                content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.New,
                 staged: false,
@@ -124,7 +122,7 @@ export const lesson06: Lesson = {
             files: [
                 {
                     name: 'pancakes',
-                    content: doc(
+                    content: lines(
                         'Pancakes',
                         '1 egg',
                         '1 cup flour',
@@ -133,37 +131,33 @@ export const lesson06: Lesson = {
                         '1 handful of blueberries',
                         '1 spoon of maple syrup',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'groceries',
-                    content: 'eggs\nflour\nbutter\nmilk\n',
-                    type: FileType.Txt,
+                    content: lines('eggs', 'flour', 'butter', 'milk'),
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'cookies',
-                    content: doc(
+                    content: lines(
                         'Cookies',
                         '2 cups flour',
                         '1 cup butter',
                         '1 cup sugar',
                         '1 cup of chocolate chips',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'soup',
-                    content: doc('Soup', '3 potatos', '1 onion', '4 cups of water'),
-                    type: FileType.Doc,
+                    content: lines('Soup', '3 potatos', '1 onion', '4 cups of water'),
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
@@ -253,7 +247,7 @@ export const lesson06: Lesson = {
             task: "Click Sam's new snapshot on origin.",
             done: "That's Sam's soup. Local history says 1 behind, which means origin has a snapshot you don't.",
             // Check. You clicked Sam's snapshot, and local history shows 1 behind.
-            actions: [{ type: 'inspect', snapshot: 'sam1' }],
+            actions: [{ type: ActionType.Inspect, snapshot: 'sam1' }],
         },
         {
             id: '6.2',
@@ -269,15 +263,15 @@ export const lesson06: Lesson = {
                 },
             ],
             task: 'Press Pull.',
-            done: "soup.md is in your working files now, and you're 0 behind. You and Sam are looking at the same recipe book again.",
-            // Check. soup.md is in working files, and local history shows 0 behind.
+            done: "The soup file is in your working files now, and you're 0 behind. You and Sam are looking at the same recipe book again.",
+            // Check. soup is in working files, and local history shows 0 behind.
             actions: [
                 {
-                    type: 'pull',
+                    type: ActionType.Pull,
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 egg',
                                 '1 cup flour',
@@ -286,45 +280,40 @@ export const lesson06: Lesson = {
                                 '1 handful of blueberries',
                                 '1 spoon of maple syrup',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'cookies',
-                            content: doc(
+                            content: lines(
                                 'Cookies',
                                 '2 cups flour',
                                 '1 cup butter',
                                 '1 cup sugar',
                                 '1 cup of chocolate chips',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'soup',
-                            content: doc('Soup', '3 potatos', '1 onion', '4 cups of water'),
-                            type: FileType.Doc,
+                            content: lines('Soup', '3 potatos', '1 onion', '4 cups of water'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'notes',
-                            content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                            type: FileType.Txt,
+                            content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.New,
                             staged: false,
@@ -346,23 +335,23 @@ export const lesson06: Lesson = {
                     text: "You and Sam work at the same time. Neither of you sees the other's snapshots until they reach origin and get pulled in.",
                 },
             ],
-            task: 'Press Edit to fix the spelling in soup.md, then stage it and commit.',
+            task: 'Press Edit to fix the spelling in the soup file, then stage it and commit.',
             done: "Fixed and saved, so you're 1 ahead. Meanwhile, Sam was busy too and just pushed another snapshot to origin. Croutons, it looks like.",
             // Check. Your spelling fix is a new snapshot in local history.
             // Workspace. Once the step is done, Sam's second snapshot, Add croutons, shows up on origin.
             actions: [
                 {
-                    type: 'edit',
+                    type: ActionType.Edit,
                     file: 'soup',
-                    content: doc('Soup', '3 potatoes', '1 onion', '4 cups of water'),
+                    content: lines('Soup', '3 potatoes', '1 onion', '4 cups of water'),
                 },
-                { type: 'stage', file: 'soup' },
-                { type: 'commit', message: 'Fix potato spelling' },
+                { type: ActionType.Stage, file: 'soup' },
+                { type: ActionType.Commit, message: 'Fix potato spelling' },
             ],
             events: [
                 {
-                    type: 'push',
-                    target: 'origin',
+                    type: WorkspaceEventType.Push,
+                    target: Remote.Origin,
                     snapshot: {
                         id: 'sam2',
                         message: 'Add croutons',
@@ -373,7 +362,7 @@ export const lesson06: Lesson = {
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 egg',
                                 '1 cup flour',
@@ -382,43 +371,39 @@ export const lesson06: Lesson = {
                                 '1 handful of blueberries',
                                 '1 spoon of maple syrup',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'cookies',
-                            content: doc(
+                            content: lines(
                                 'Cookies',
                                 '2 cups flour',
                                 '1 cup butter',
                                 '1 cup sugar',
                                 '1 cup of chocolate chips',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'soup',
-                            content: doc(
+                            content: lines(
                                 'Soup',
                                 '3 potatos',
                                 '1 onion',
                                 '4 cups of water',
                                 '1 handful of croutons',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
@@ -440,7 +425,7 @@ export const lesson06: Lesson = {
             task: 'Press Push.',
             done: "Origin said no. It has Sam's croutons and you don't, and Git refuses any push that would wipe out someone else's work.",
             // Check. The push was refused, and origin didn't change.
-            actions: [{ type: 'push' }],
+            actions: [{ type: ActionType.Push }],
         },
         {
             id: '6.5',
@@ -460,11 +445,11 @@ export const lesson06: Lesson = {
             // Check. Origin has your snapshot and both of Sam's.
             actions: [
                 {
-                    type: 'pull',
+                    type: ActionType.Pull,
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 egg',
                                 '1 cup flour',
@@ -473,58 +458,53 @@ export const lesson06: Lesson = {
                                 '1 handful of blueberries',
                                 '1 spoon of maple syrup',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'cookies',
-                            content: doc(
+                            content: lines(
                                 'Cookies',
                                 '2 cups flour',
                                 '1 cup butter',
                                 '1 cup sugar',
                                 '1 cup of chocolate chips',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'soup',
-                            content: doc(
+                            content: lines(
                                 'Soup',
                                 '3 potatoes',
                                 '1 onion',
                                 '4 cups of water',
                                 '1 handful of croutons',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'notes',
-                            content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                            type: FileType.Txt,
+                            content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.New,
                             staged: false,
                         },
                     ],
                 },
-                { type: 'push' },
+                { type: ActionType.Push },
             ],
         },
     ],
