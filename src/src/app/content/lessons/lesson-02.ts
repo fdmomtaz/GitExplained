@@ -1,8 +1,7 @@
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson02: Lesson = {
     id: 'taking-snapshots',
@@ -28,16 +27,14 @@ export const lesson02: Lesson = {
         files: [
             {
                 name: 'pancakes',
-                content: doc('Pancakes', '1 egg', '1 cup flour', '1 cup milk', '1 pinch of salt'),
-                type: FileType.Doc,
+                content: lines('Pancakes', '1 egg', '1 cup flour', '1 cup milk', '1 pinch of salt'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'groceries',
-                content: 'eggs\nflour\nbutter\nmilk\n',
-                type: FileType.Txt,
+                content: lines('eggs', 'flour', 'butter', 'milk'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Changed,
                 staged: false,
@@ -73,17 +70,17 @@ export const lesson02: Lesson = {
                 },
                 {
                     type: TextType.Details,
-                    text: 'Git tracks changes line by line. It sees one new line in pancakes.md and one in groceries.txt, and later it shows you just those lines. The command git diff lists them.',
+                    text: 'Git tracks changes line by line. It sees one new line in the pancake recipe and one on the grocery list, and later it shows you just those lines. The command git diff lists them.',
                 },
             ],
-            task: 'Press Edit to add blueberries to pancakes.md.',
+            task: 'Press Edit to add blueberries to the pancakes file.',
             done: 'Two files are Changed now, the milk and the blueberries. Neither one is saved. Right now they exist only in your working files and nowhere else.',
-            // Check. pancakes.md shows Changed.
+            // Check. pancakes shows Changed.
             actions: [
                 {
                     type: 'edit',
                     file: 'pancakes',
-                    content: doc(
+                    content: lines(
                         'Pancakes',
                         '1 egg',
                         '1 cup flour',
@@ -109,7 +106,7 @@ export const lesson02: Lesson = {
             ],
             task: 'Press Commit and type a message, like Add blueberries and milk.',
             done: "Saved. Both edits went into one snapshot, because Commit grabs everything that changed. Sometimes you won't want that, and lesson 3 shows you how to pick.",
-            // Check. Snapshot 2 is in local history, and pancakes.md and groceries.txt show Unchanged.
+            // Check. Snapshot 2 is in local history, and pancakes and groceries show Unchanged.
             actions: [{ type: 'commit', message: 'Add blueberries and milk' }],
         },
         {
@@ -129,15 +126,14 @@ export const lesson02: Lesson = {
                     text: 'Git calls new files untracked. It leaves them alone until they go into a commit, and then it watches them like every other file. The command git status lists untracked files in their own group.',
                 },
             ],
-            task: 'Press New file and name it cookies.md.',
+            task: 'Press New file and name it cookies.',
             done: "New means Git has never saved this file. Delete it now and it's gone for good, like those pancake copies in lesson 1. No pressure.",
-            // Check. cookies.md shows New.
+            // Check. cookies shows New.
             actions: [
                 {
                     type: 'newFile',
                     file: 'cookies',
-                    content: doc('Cookies', '2 cups flour', '1 cup butter', '1 cup sugar'),
-                    fileType: FileType.Doc,
+                    content: lines('Cookies', '2 cups flour', '1 cup butter', '1 cup sugar'),
                 },
             ],
         },
@@ -162,7 +158,7 @@ export const lesson02: Lesson = {
             done: 'Your history now reads like a diary of the recipe book, minus the drama. Anyone can follow it, including future you, who will be grateful.',
             wrongMove:
                 "That doesn't say what changed. Future you won't find anything with it. Press Reset step and pick again.",
-            // Check. Snapshot 3 says Add cookie recipe, and cookies.md shows Unchanged. The other choices are "stuff" and "Update files".
+            // Check. Snapshot 3 says Add cookie recipe, and cookies shows Unchanged. The other choices are "stuff" and "Update files".
             actions: [{ type: 'commit', message: 'Add cookie recipe' }],
         },
     ],

@@ -1,4 +1,3 @@
-import { FileType } from '../enums/file-type';
 import { WorkspaceFile } from './workspace-file';
 
 /** A button you press. Some actions carry `files`, the results the engine can't guess. */
@@ -6,7 +5,7 @@ export type Action =
     | { type: 'delete' | 'stage' | 'unstage' | 'ignore'; file: string }
     | { type: 'discard'; file: string; files: WorkspaceFile[] }
     | { type: 'edit'; file: string; content: string }
-    | { type: 'newFile'; file: string; fileType: FileType; content: string }
+    | { type: 'newFile'; file: string; content: string }
     | { type: 'startTracking' | 'commit'; message: string }
     | { type: 'inspect'; snapshot: string } // click a snapshot to read it, nothing changes
     | { type: 'view'; snapshot: string; files: WorkspaceFile[] }

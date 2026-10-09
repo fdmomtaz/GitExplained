@@ -16,7 +16,7 @@ This plan covers the models and services that give the app its lessons and steps
 - The next lesson comes from `number`. Its `summary` serves as the teaser at the end of a lesson, so there is no `upNext` field.
 - The glossary has no file or service of its own. The Glossary page builds it from every lesson's `topics`.
 - Progress only knows three states per lesson, not started, in progress, and completed. Steps aren't saved, so reopening a lesson starts at step 1.
-- Files are either plain text (`Txt`) or rich text (`Doc`). A Doc file holds the HTML that the Optimus editor (Quill) reads and writes, so it binds with `ngModel` and needs no conversion.
+- Every file is plain text, and file names have no extension. Learners see "pancakes", not "pancakes.md", and the lesson text says "the pancakes file".
 
 ## Content models
 
@@ -71,11 +71,11 @@ Step 1.3 as an example.
     body: [
         { type: TextType.Paragraph, text: "You don't have to remember which files you touched..." },
         { type: TextType.Paragraph, text: 'Try it. Add something to the shopping list.' },
-        { type: TextType.Task, text: 'Press Edit to add milk to groceries.txt.' },
-        { type: TextType.Done, text: "Git marked groceries.txt as Changed, but it didn't save anything..." },
+        { type: TextType.Task, text: 'Press Edit to add milk to the groceries file.' },
+        { type: TextType.Done, text: "Git marked the groceries file as Changed, but it didn't save anything..." },
         { type: TextType.Details, text: "The command git status lists every file that's different..." },
     ],
-    actions: [{ type: 'edit', file: 'groceries.txt', content: '...' }],
+    actions: [{ type: 'edit', file: 'groceries', content: '...' }],
 }
 ```
 
@@ -99,11 +99,6 @@ export interface WorkspaceConfig {
     showOrigin: boolean;        // true from lesson 5 on
 }
 
-export enum FileType {
-    Txt = 'txt',    // plain text
-    Doc = 'doc',    // rich text in the Optimus editor (Quill), stored as the HTML it reads and writes
-}
-
 export enum FileStatus {
     Unchanged = 'unchanged',
     Changed = 'changed',
@@ -113,9 +108,8 @@ export enum FileStatus {
 }
 
 export interface WorkspaceFile {
-    name: string;               // 'pancakes', the extension comes from type (.txt or .md)
-    content: string;            // plain text for Txt files, HTML for Doc files
-    type: FileType;
+    name: string;               // 'pancakes', no extension
+    content: string;            // plain text
     modifiedOn: string;         // ISO date, shown as "Friday" in lesson 1
     status: FileStatus;
     staged: boolean;
@@ -236,5 +230,5 @@ A Vitest test replays every lesson through the engine. It fails when a step asks
 1. Tokens. `docs/step-text.md`, the live doc, and CLAUDE.md still use `{at0}` and the others. Should we swap them for the plain wording and update the rules?
 2. "Your computer". The final design calls the local panel "Your computer · Local copy". CLAUDE.md says to avoid that phrase. Which one does the app use?
 3. Typing. Do you type commit messages and branch names, or pick them from a list? Picking means Step gets a `choices` field. Typing means the step has to accept any text. This blocks the engine and `LessonPlayer`.
-4. File names. Names no longer carry an extension. The list adds .txt or .md from the file's type, so Doc files still show as .md to match the lesson text. Is .md right for a rich text file?
+4. File names. Settled. Names have no extension and every file is plain text.
 5. Keeping text in sync. Do we copy lesson text into the TS files by hand, or build them from `docs/step-text.md` with a script? A script keeps one source of truth. The bold labels already map to text block types, so only each step's action would need a fixed format in the Markdown.

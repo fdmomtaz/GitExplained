@@ -3,18 +3,21 @@
         <aside class="flex flex-col gap-6 lg:col-span-2">
             <div class="flex flex-col gap-3">
                 <span class="kicker">Lesson {{ p.lesson.number }} · {{ p.lesson.title }}</span>
-                <p-button
-                    severity="secondary"
-                    [label]="
-                        'Step ' +
-                        (p.index() + 1) +
-                        ' of ' +
-                        p.lesson.steps.length +
-                        ' · ' +
-                        p.step().title
-                    "
-                    (onClick)="picker.toggle($event)"
-                />
+                <div class="flex items-center justify-between gap-3">
+                    <p-button
+                        severity="secondary"
+                        [label]="
+                            'Step ' +
+                            (p.index() + 1) +
+                            ' of ' +
+                            p.lesson.steps.length +
+                            ' · ' +
+                            p.step().title
+                        "
+                        (onClick)="picker.toggle($event)"
+                    />
+                    <p-button label="Reset step" [text]="true" (onClick)="p.reset()" />
+                </div>
                 <div class="flex gap-1.5">
                     @for (step of p.lesson.steps; track step.id; let i = $index) {
                         <div
@@ -64,8 +67,6 @@
             </p-popover>
 
             <div class="flex flex-col gap-3">
-                <span class="kicker">Step {{ p.index() + 1 }}</span>
-                <h2 class="text-4xl">{{ p.step().title }}</h2>
                 @for (block of p.step().body; track $index) {
                     @if (block.type === TextType.Details) {
                         <details class="border-y py-3">
@@ -123,15 +124,12 @@
             }
 
             <div class="flex items-center justify-between gap-3 border-t pt-4">
-                <div class="flex items-center gap-1">
-                    <p-button
-                        label="← Back"
-                        [text]="true"
-                        [disabled]="p.index() === 0"
-                        (onClick)="p.back()"
-                    />
-                    <p-button label="Reset step" [text]="true" (onClick)="p.reset()" />
-                </div>
+                <p-button
+                    label="← Back"
+                    [text]="true"
+                    [disabled]="p.index() === 0"
+                    (onClick)="p.back()"
+                />
                 <div class="flex items-center gap-3">
                     @if (!p.done()) {
                         <span class="text-sm text-muted-color">Finish the task to continue</span>

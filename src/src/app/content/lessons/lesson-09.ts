@@ -1,8 +1,7 @@
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson09: Lesson = {
     id: 'when-changes-collide',
@@ -23,7 +22,7 @@ export const lesson09: Lesson = {
         files: [
             {
                 name: 'pancakes',
-                content: doc(
+                content: lines(
                     'Pancakes',
                     '1 mashed banana',
                     '1 cup flour',
@@ -33,51 +32,46 @@ export const lesson09: Lesson = {
                     '1 spoon of maple syrup',
                     'Serves 4',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'groceries',
-                content: 'eggs\nflour\nbutter\nmilk\n',
-                type: FileType.Txt,
+                content: lines('eggs', 'flour', 'butter', 'milk'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'cookies',
-                content: doc(
+                content: lines(
                     'Cookies',
                     '2 cups flour',
                     '1 cup butter',
                     '1 cup sugar',
                     '1 cup of chocolate chips',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'soup',
-                content: doc(
+                content: lines(
                     'Soup',
                     '3 potatoes',
                     '1 onion',
                     '4 cups of water',
                     '1 handful of croutons',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'notes',
-                content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                type: FileType.Txt,
+                content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.New,
                 staged: false,
@@ -171,7 +165,7 @@ export const lesson09: Lesson = {
             files: [
                 {
                     name: 'pancakes',
-                    content: doc(
+                    content: lines(
                         'Pancakes',
                         '1 mashed banana',
                         '1 cup flour',
@@ -181,43 +175,39 @@ export const lesson09: Lesson = {
                         '1 spoon of maple syrup',
                         'Serves 4',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'groceries',
-                    content: 'eggs\nflour\nbutter\nmilk\n',
-                    type: FileType.Txt,
+                    content: lines('eggs', 'flour', 'butter', 'milk'),
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'cookies',
-                    content: doc(
+                    content: lines(
                         'Cookies',
                         '2 cups flour',
                         '1 cup butter',
                         '1 cup sugar',
                         '1 cup of chocolate chips',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'soup',
-                    content: doc(
+                    content: lines(
                         'Soup',
                         '3 potatoes',
                         '1 onion',
                         '4 cups of water',
                         '1 handful of croutons',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
@@ -342,14 +332,14 @@ export const lesson09: Lesson = {
                     text: "Commit never talks to origin. It only looks at your own history, so it can't know what anyone else did since your last pull.",
                 },
             ],
-            task: 'Press Edit to change the milk to oat milk in pancakes.md, then stage it and commit.',
+            task: 'Press Edit to change the milk to oat milk in the pancakes file, then stage it and commit.',
             done: "Your fix is saved. Here's what you don't know yet. Sam fixed the same line an hour ago, with almond milk, and already pushed it.",
             // Check. Your oat milk snapshot is in local history.
             actions: [
                 {
                     type: 'edit',
                     file: 'pancakes',
-                    content: doc(
+                    content: lines(
                         'Pancakes',
                         '1 mashed banana',
                         '1 cup flour',
@@ -378,16 +368,16 @@ export const lesson09: Lesson = {
                 },
             ],
             task: 'Press Pull.',
-            done: "Git stopped and marked pancakes.md as Conflict. You and Sam both changed the milk line, and Git won't guess which one should win.",
-            // Check. pancakes.md shows Conflict.
-            // Workspace. pancakes.md shows both versions of the milk line, yours and Sam's, one above the other.
+            done: "Git stopped and marked the pancakes file as Conflict. You and Sam both changed the milk line, and Git won't guess which one should win.",
+            // Check. pancakes shows Conflict.
+            // Workspace. pancakes shows both versions of the milk line, yours and Sam's, one above the other.
             actions: [
                 {
                     type: 'pull',
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 mashed banana',
                                 '1 cup flour',
@@ -398,51 +388,46 @@ export const lesson09: Lesson = {
                                 '1 spoon of maple syrup',
                                 'Serves 4',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Conflict,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'cookies',
-                            content: doc(
+                            content: lines(
                                 'Cookies',
                                 '2 cups flour',
                                 '1 cup butter',
                                 '1 cup sugar',
                                 '1 cup of chocolate chips',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'soup',
-                            content: doc(
+                            content: lines(
                                 'Soup',
                                 '3 potatoes',
                                 '1 onion',
                                 '4 cups of water',
                                 '1 handful of croutons',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'notes',
-                            content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                            type: FileType.Txt,
+                            content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.New,
                             staged: false,
@@ -468,14 +453,14 @@ export const lesson09: Lesson = {
                     text: 'In real Git you open the file, delete the markers, keep the lines you want, and run git add to mark it fixed. Many editors add buttons like Accept current and Accept incoming to make this faster.',
                 },
             ],
-            task: 'Press Resolve on pancakes.md and pick the line you want.',
-            done: "pancakes.md has one milk line again, and Resolve staged it for you. Whatever you picked, you picked it on purpose. That's the whole point of a conflict.",
-            // Check. pancakes.md no longer shows Conflict, and it's staged.
+            task: 'Press Resolve on the pancakes file and pick the line you want.',
+            done: "The pancakes file has one milk line again, and Resolve staged it for you. Whatever you picked, you picked it on purpose. That's the whole point of a conflict.",
+            // Check. pancakes no longer shows Conflict, and it's staged.
             actions: [
                 {
                     type: 'resolve',
                     file: 'pancakes',
-                    content: doc(
+                    content: lines(
                         'Pancakes',
                         '1 mashed banana',
                         '1 cup flour',

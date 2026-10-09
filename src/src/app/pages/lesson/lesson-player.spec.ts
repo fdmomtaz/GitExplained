@@ -1,4 +1,5 @@
 import { lesson01 } from '../../content/lessons/lesson-01';
+import { lesson02 } from '../../content/lessons/lesson-02';
 import { LessonPlayer } from './lesson-player';
 
 describe('LessonPlayer', () => {
@@ -38,5 +39,21 @@ describe('LessonPlayer', () => {
         expect(player.workspace().files.find((f) => f.name === 'groceries')!.status).toBe(
             'unchanged',
         );
+    });
+
+    it('makes the new file the step asks for and marks it new', () => {
+        const player = new LessonPlayer(lesson02);
+        player.goTo(lesson02.steps.findIndex((s) => s.actions[0].type === 'newFile'));
+        player.press('newFile', 'cookies');
+        expect(player.done()).toBe(true);
+        expect(player.workspace().files.find((f) => f.name === 'cookies')!.status).toBe('new');
+    });
+
+    it('counts a new file with the wrong name as the wrong move', () => {
+        const player = new LessonPlayer(lesson02);
+        player.goTo(lesson02.steps.findIndex((s) => s.actions[0].type === 'newFile'));
+        player.press('newFile', 'cookie');
+        expect(player.wrong()).toBe(true);
+        expect(player.done()).toBe(false);
     });
 });

@@ -56,7 +56,9 @@
                         [types]="['unstage']"
                     />
                 }
-                <app-action-bar title="Working files" [player]="player()" />
+                <app-action-bar title="Working files" [player]="player()">
+                    <app-new-file [player]="player()" />
+                </app-action-bar>
                 <app-file-list [files]="working()" [player]="player()" [types]="workingTypes()" />
             </div>
             @if (ws().history; as history) {

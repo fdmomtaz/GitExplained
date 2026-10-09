@@ -1,8 +1,7 @@
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson03: Lesson = {
     id: 'choosing-what-to-save',
@@ -32,7 +31,7 @@ export const lesson03: Lesson = {
         files: [
             {
                 name: 'pancakes',
-                content: doc(
+                content: lines(
                     'Pancakes',
                     '1 egg',
                     '1 cup flour',
@@ -41,31 +40,27 @@ export const lesson03: Lesson = {
                     '1 handful of blueberries',
                     '1 spoon of maple syrup',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Changed,
                 staged: false,
             },
             {
                 name: 'groceries',
-                content: 'eggs\nflour\nbutter\nmilk\nchoc\n',
-                type: FileType.Txt,
+                content: lines('eggs', 'flour', 'butter', 'milk', 'choc'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Changed,
                 staged: false,
             },
             {
                 name: 'cookies',
-                content: doc('Cookies', '2 cups flour', '1 cup butter', '1 cup sugar'),
-                type: FileType.Doc,
+                content: lines('Cookies', '2 cups flour', '1 cup butter', '1 cup sugar'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'notes',
-                content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                type: FileType.Txt,
+                content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.New,
                 staged: false,
@@ -107,7 +102,7 @@ export const lesson03: Lesson = {
             body: [
                 {
                     type: TextType.Paragraph,
-                    text: "You've been busy. The syrup in pancakes.md is done, the shopping list is half written, and notes.txt is brand new.",
+                    text: "You've been busy. The syrup in the pancake recipe is done, the shopping list is half written, and the notes file is brand new.",
                 },
                 {
                     type: TextType.Paragraph,
@@ -118,9 +113,9 @@ export const lesson03: Lesson = {
                     text: 'Git calls this git add. The staging area is also called the index. Until now, Commit staged every change for you behind the scenes.',
                 },
             ],
-            task: 'Press Stage on pancakes.md.',
-            done: "pancakes.md is in the staging area now, ready for the next snapshot. The other files didn't move, and they won't until you move them.",
-            // Check. pancakes.md is staged.
+            task: 'Press Stage on the pancakes file.',
+            done: "The pancakes file is in the staging area now, ready for the next snapshot. The other files didn't move, and they won't until you move them.",
+            // Check. pancakes is staged.
             actions: [{ type: 'stage', file: 'pancakes' }],
         },
         {
@@ -129,16 +124,16 @@ export const lesson03: Lesson = {
             body: [
                 {
                     type: TextType.Paragraph,
-                    text: "New files go through staging too. Stage notes.txt and take a peek at what's inside.",
+                    text: "New files go through staging too. Stage the notes file and take a peek at what's inside.",
                 },
                 {
                     type: TextType.Details,
                     text: "Staging a new file is how Git starts tracking it. Once it's in a snapshot, Git watches it like every other file.",
                 },
             ],
-            task: 'Press Stage on notes.txt.',
-            done: 'notes.txt is in the staging area too. Wait. Its first line says "The pancakes are from a box mix." That secret can\'t go in the family recipe book.',
-            // Check. notes.txt is staged.
+            task: 'Press Stage on the notes file.',
+            done: 'The notes file is in the staging area too. Wait. Its first line says "The pancakes are from a box mix." That secret can\'t go in the family recipe book.',
+            // Check. notes is staged.
             actions: [{ type: 'stage', file: 'notes' }],
         },
         {
@@ -154,9 +149,9 @@ export const lesson03: Lesson = {
                     text: 'Unstage never touches your work. It only changes what goes in the next snapshot. The command is git restore with the staged option. Lesson 12 shows how to make Git ignore a file for good.',
                 },
             ],
-            task: 'Press Unstage on notes.txt.',
-            done: 'Crisis avoided. notes.txt is back in your working files, still New, and the box mix stays between you and Git.',
-            // Check. notes.txt is not staged and still shows New.
+            task: 'Press Unstage on the notes file.',
+            done: 'Crisis avoided. The notes file is back in your working files, still New, and the box mix stays between you and Git.',
+            // Check. notes is not staged and still shows New.
             actions: [{ type: 'unstage', file: 'notes' }],
         },
         {
@@ -174,7 +169,7 @@ export const lesson03: Lesson = {
             ],
             task: 'Press Commit with the message Add maple syrup.',
             done: "Snapshot 4 holds the syrup and nothing else. One snapshot, one idea. A year from now you'll still know what it did.",
-            // Check. Snapshot 4 is in local history and holds only pancakes.md. groceries.txt still shows Changed, and notes.txt still shows New.
+            // Check. Snapshot 4 is in local history and holds only pancakes. groceries still shows Changed, and notes still shows New.
             actions: [{ type: 'commit', message: 'Add maple syrup' }],
         },
     ],

@@ -7,11 +7,12 @@ import { IconName } from '../file-icon/file-icon';
 import { FileList } from '../file-list/file-list';
 import { IconLegend } from '../icon-legend/icon-legend';
 import { HistoryList } from '../history-list/history-list';
+import { NewFile } from '../new-file/new-file';
 
 /** The right side of a lesson. It shows the places the lesson uses and the buttons for each. */
 @Component({
     selector: 'app-workspace',
-    imports: [ActionBar, FileList, HistoryList, IconLegend],
+    imports: [ActionBar, FileList, HistoryList, IconLegend, NewFile],
     templateUrl: './workspace.html',
 })
 export class WorkspacePanel {

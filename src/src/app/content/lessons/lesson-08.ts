@@ -1,8 +1,7 @@
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson08: Lesson = {
     id: 'merging',
@@ -22,7 +21,7 @@ export const lesson08: Lesson = {
         files: [
             {
                 name: 'pancakes',
-                content: doc(
+                content: lines(
                     'Pancakes',
                     '1 egg',
                     '1 cup flour',
@@ -31,51 +30,46 @@ export const lesson08: Lesson = {
                     '1 handful of blueberries',
                     '1 spoon of maple syrup',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'groceries',
-                content: 'eggs\nflour\nbutter\nmilk\n',
-                type: FileType.Txt,
+                content: lines('eggs', 'flour', 'butter', 'milk'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'cookies',
-                content: doc(
+                content: lines(
                     'Cookies',
                     '2 cups flour',
                     '1 cup butter',
                     '1 cup sugar',
                     '1 cup of chocolate chips',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'soup',
-                content: doc(
+                content: lines(
                     'Soup',
                     '3 potatoes',
                     '1 onion',
                     '4 cups of water',
                     '1 handful of croutons',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'notes',
-                content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                type: FileType.Txt,
+                content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.New,
                 staged: false,
@@ -155,7 +149,7 @@ export const lesson08: Lesson = {
             files: [
                 {
                     name: 'pancakes',
-                    content: doc(
+                    content: lines(
                         'Pancakes',
                         '1 egg',
                         '1 cup flour',
@@ -165,43 +159,39 @@ export const lesson08: Lesson = {
                         '1 spoon of maple syrup',
                         'Serves 4',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'groceries',
-                    content: 'eggs\nflour\nbutter\nmilk\n',
-                    type: FileType.Txt,
+                    content: lines('eggs', 'flour', 'butter', 'milk'),
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'cookies',
-                    content: doc(
+                    content: lines(
                         'Cookies',
                         '2 cups flour',
                         '1 cup butter',
                         '1 cup sugar',
                         '1 cup of chocolate chips',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'soup',
-                    content: doc(
+                    content: lines(
                         'Soup',
                         '3 potatoes',
                         '1 onion',
                         '4 cups of water',
                         '1 handful of croutons',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
@@ -321,7 +311,7 @@ export const lesson08: Lesson = {
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 egg',
                                 '1 cup flour',
@@ -331,51 +321,46 @@ export const lesson08: Lesson = {
                                 '1 spoon of maple syrup',
                                 'Serves 4',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'cookies',
-                            content: doc(
+                            content: lines(
                                 'Cookies',
                                 '2 cups flour',
                                 '1 cup butter',
                                 '1 cup sugar',
                                 '1 cup of chocolate chips',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'soup',
-                            content: doc(
+                            content: lines(
                                 'Soup',
                                 '3 potatoes',
                                 '1 onion',
                                 '4 cups of water',
                                 '1 handful of croutons',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'notes',
-                            content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                            type: FileType.Txt,
+                            content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.New,
                             staged: false,
@@ -402,8 +387,8 @@ export const lesson08: Lesson = {
                 },
             ],
             task: 'Press Merge and pick vegan.',
-            done: 'A merge snapshot joins the two lines. pancakes.md now has the banana and the serving size. Git combined them on its own, because they changed different lines.',
-            // Check. A merge snapshot joins the two lines, and pancakes.md has the banana and the serving size.
+            done: 'A merge snapshot joins the two lines. The pancakes file now has the banana and the serving size. Git combined them on its own, because they changed different lines.',
+            // Check. A merge snapshot joins the two lines, and pancakes has the banana and the serving size.
             actions: [
                 {
                     type: 'merge',
@@ -412,7 +397,7 @@ export const lesson08: Lesson = {
                     files: [
                         {
                             name: 'pancakes',
-                            content: doc(
+                            content: lines(
                                 'Pancakes',
                                 '1 mashed banana',
                                 '1 cup flour',
@@ -422,51 +407,46 @@ export const lesson08: Lesson = {
                                 '1 spoon of maple syrup',
                                 'Serves 4',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'groceries',
-                            content: 'eggs\nflour\nbutter\nmilk\n',
-                            type: FileType.Txt,
+                            content: lines('eggs', 'flour', 'butter', 'milk'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'cookies',
-                            content: doc(
+                            content: lines(
                                 'Cookies',
                                 '2 cups flour',
                                 '1 cup butter',
                                 '1 cup sugar',
                                 '1 cup of chocolate chips',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'soup',
-                            content: doc(
+                            content: lines(
                                 'Soup',
                                 '3 potatoes',
                                 '1 onion',
                                 '4 cups of water',
                                 '1 handful of croutons',
                             ),
-                            type: FileType.Doc,
                             modifiedOn: '2026-10-02',
                             status: FileStatus.Unchanged,
                             staged: false,
                         },
                         {
                             name: 'notes',
-                            content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                            type: FileType.Txt,
+                            content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                             modifiedOn: '2026-10-02',
                             status: FileStatus.New,
                             staged: false,

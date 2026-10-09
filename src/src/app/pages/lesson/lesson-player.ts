@@ -5,7 +5,7 @@ import { Lesson } from '../../models/lesson';
 import { apply, stateAt } from '../../services/workspace-engine';
 
 /** Buttons that work on any file at any time, the way they do in a real folder. */
-const ALWAYS_ON: ActionType[] = ['edit', 'delete'];
+const ALWAYS_ON: ActionType[] = ['edit', 'delete', 'newFile'];
 
 /** Plays one lesson. The lesson page makes a new player whenever the lesson changes. */
 export class LessonPlayer {
@@ -79,6 +79,7 @@ export class LessonPlayer {
 }
 
 function freeMove(ws: Workspace, type: ActionType, file: string): Action {
+    if (type === 'newFile') return { type, file, content: '' };
     if (type !== 'edit') return { type, file } as Action;
     return { type, file, content: ws.files.find((f) => f.name === file)!.content };
 }

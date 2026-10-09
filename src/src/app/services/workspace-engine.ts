@@ -27,6 +27,20 @@ export function apply(ws: Workspace, action: Action): Workspace {
                 status: watched ? FileStatus.Changed : status,
             });
         }
+        case 'newFile': {
+            if (ws.files.some((f) => f.name === action.file)) {
+                throw new Error(`There's already a file called ${action.file}`);
+            }
+            const file: WorkspaceFile = {
+                name: action.file,
+                content: action.content,
+                modifiedOn: new Date().toISOString(),
+                // Before Start tracking nothing watches the folder, so nothing gets marked.
+                status: ws.history ? FileStatus.New : FileStatus.Unchanged,
+                staged: false,
+            };
+            return { ...ws, files: [...ws.files, file] };
+        }
         case 'stage':
             return update(ws, action.file, { staged: true });
         case 'unstage':

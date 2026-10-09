@@ -5,7 +5,7 @@
             [class]="isTouched(file.name) ? 'animate-rise bg-primary-50' : ''"
         >
             <div class="flex min-h-8 items-center justify-between gap-3">
-                <span class="truncate">{{ file.name }}{{ extension[file.type] }}</span>
+                <span class="truncate">{{ file.name }}</span>
                 @if (player(); as p) {
                     <span class="flex shrink-0">
                         @for (type of types(); track type) {
@@ -18,9 +18,8 @@
                                 [attr.aria-label]="icons[type].label + ' ' + file.name"
                                 [pTooltip]="icons[type].label + '. ' + icons[type].hint"
                                 tooltipPosition="top"
-                                [severity]="p.asks(type) ? undefined : 'secondary'"
+                                severity="secondary"
                                 [disabled]="!p.canPress(type)"
-                                [class.animate-glow]="p.asks(type)"
                                 (click)="p.press(type, file.name)"
                             >
                                 <app-file-icon [name]="type" />

@@ -3,7 +3,6 @@ import { Component, input } from '@angular/core';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { TooltipModule } from '@openng/optimus-ui/tooltip';
 import { FileStatus } from '../../enums/file-status';
-import { EXTENSION } from '../../enums/file-type';
 import { FileActionType } from '../../models/action';
 import { WorkspaceFile } from '../../models/workspace-file';
 import { LessonPlayer } from '../../pages/lesson/lesson-player';
@@ -21,7 +20,6 @@ export class FileList {
     readonly types = input<FileActionType[]>([]);
     readonly emptyMessage = input('No files');
 
-    protected readonly extension = EXTENSION;
     protected readonly icons = ICONS;
     protected readonly unchanged = FileStatus.Unchanged;
     protected readonly ignored = FileStatus.Ignored;
