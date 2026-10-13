@@ -1,0 +1,59 @@
+name: Test and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: src/package-lock.json
+
+      # Match the npm version pinned in package.json's packageManager field.
+      - run: npm install -g npm@12.0.2
+
+      - run: npm ci
+
+      - run: npx ng test --watch=false
+
+      # Prerenders every route to its own index.html, so deep links like /lessons load on Pages.
+      # Pages serves a project site under /<repo>/, so the base href must match.
+      - run: npx ng build --base-href /${{ github.event.repository.name }}/
+
+      - uses: actions/upload-pages-artifact@v4
+        if: github.event_name != 'pull_request'
+        with:
+          path: src/dist/git-explained/browser
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
