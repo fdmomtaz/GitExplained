@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideOptimus } from '@openng/optimus-ui/config';
 import { Broadsheet } from './theme/broadsheet';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -16,5 +17,6 @@ export const appConfig: ApplicationConfig = {
                 },
             },
         }),
+        provideClientHydration(),
     ],
 };
