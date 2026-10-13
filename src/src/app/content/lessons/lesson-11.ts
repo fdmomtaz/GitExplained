@@ -1,8 +1,10 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
+import { Remote } from '../../enums/remote';
 import { TextType } from '../../enums/text-type';
+import { WorkspaceEventType } from '../../enums/workspace-event-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson11: Lesson = {
     id: 'copying-a-project',
@@ -35,29 +37,26 @@ export const lesson11: Lesson = {
             files: [
                 {
                     name: 'waffles',
-                    content: doc('Waffles', '2 eggs', '2 cups flour', '1 cup milk'),
-                    type: FileType.Doc,
+                    content: lines('Waffles', '2 eggs', '2 cups flour', '1 cup milk'),
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'crepes',
-                    content: doc('Crepes', '2 eggs', '1 cup flour', '2 cups milk'),
-                    type: FileType.Doc,
+                    content: lines('Crepes', '2 eggs', '1 cup flour', '2 cups milk'),
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'french toast',
-                    content: doc(
+                    content: lines(
                         'French toast',
                         '4 slices of bread',
                         '2 eggs',
                         '1 spoon of cinnamon',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
@@ -111,7 +110,7 @@ export const lesson11: Lesson = {
             task: "Press Fork on Alex's Cookbook.",
             done: "You now have your own copy of the cookbook on GitHub. Alex's cookbook hasn't changed, and Alex has no idea what's coming.",
             // Check. Your fork of the cookbook shows up as origin.
-            actions: [{ type: 'fork' }],
+            actions: [{ type: ActionType.Fork }],
         },
         {
             id: '11.2',
@@ -129,7 +128,7 @@ export const lesson11: Lesson = {
             task: 'Press Clone on your fork.',
             done: 'Every cookbook file came along, and so did every snapshot. Your fork is origin for this copy, so Push and Pull already know where to go.',
             // Check. Working files and local history show the cookbook.
-            actions: [{ type: 'clone' }],
+            actions: [{ type: ActionType.Clone }],
         },
         {
             id: '11.3',
@@ -144,24 +143,23 @@ export const lesson11: Lesson = {
                     text: 'Big projects often have rules for file names and commit messages. Their README or contributing guide tells you what they are.',
                 },
             ],
-            task: 'Press New file and name it pancakes.md, then stage it and commit.',
+            task: 'Press New file and name it pancakes, then stage it and commit.',
             done: 'The cookbook finally has pancakes, at least in your local history. Nobody else can see them yet.',
-            // Check. pancakes.md is in a new snapshot in local history.
+            // Check. pancakes is in a new snapshot in local history.
             actions: [
                 {
-                    type: 'newFile',
+                    type: ActionType.NewFile,
                     file: 'pancakes',
-                    content: doc(
+                    content: lines(
                         'Pancakes',
                         '1 egg',
                         '1 cup flour',
                         '1 cup milk',
                         '1 pinch of salt',
                     ),
-                    fileType: FileType.Doc,
                 },
-                { type: 'stage', file: 'pancakes' },
-                { type: 'commit', message: 'Add pancakes' },
+                { type: ActionType.Stage, file: 'pancakes' },
+                { type: ActionType.Commit, message: 'Add pancakes' },
             ],
         },
         {
@@ -179,8 +177,8 @@ export const lesson11: Lesson = {
             ],
             task: 'Press Push.',
             done: "Your fork has the pancakes, but Alex's Cookbook still doesn't. A fork never sends anything back to the original by itself.",
-            // Check. Your fork has pancakes.md, and Alex's Cookbook doesn't.
-            actions: [{ type: 'push' }],
+            // Check. Your fork has pancakes, and Alex's Cookbook doesn't.
+            actions: [{ type: ActionType.Push }],
         },
         {
             id: '11.5',
@@ -197,10 +195,18 @@ export const lesson11: Lesson = {
             ],
             task: "Press New pull request and pick your fork into Alex's Cookbook.",
             done: "Alex merged it in under a minute. Alex was clearly hungry. Your recipe is now part of a project you don't own, and Alex still got the final say.",
-            // Check. Alex's Cookbook has pancakes.md.
+            // Check. Alex's Cookbook has pancakes.
             // Workspace. Alex merges the pull request right after you open it.
-            actions: [{ type: 'newPullRequest', from: 'Your fork', into: "Alex's Cookbook" }],
-            events: [{ type: 'mergePullRequest', author: 'Alex', target: 'upstream' }],
+            actions: [
+                { type: ActionType.NewPullRequest, from: 'Your fork', into: "Alex's Cookbook" },
+            ],
+            events: [
+                {
+                    type: WorkspaceEventType.MergePullRequest,
+                    author: 'Alex',
+                    target: Remote.Upstream,
+                },
+            ],
         },
     ],
 };

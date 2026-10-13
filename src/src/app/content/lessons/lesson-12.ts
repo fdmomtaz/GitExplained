@@ -1,8 +1,8 @@
+import { ActionType } from '../../enums/action-type';
 import { FileStatus } from '../../enums/file-status';
-import { FileType } from '../../enums/file-type';
 import { TextType } from '../../enums/text-type';
 import { Lesson } from '../../models/lesson';
-import { doc } from '../doc';
+import { lines } from '../lines';
 
 export const lesson12: Lesson = {
     id: 'good-habits',
@@ -33,7 +33,7 @@ export const lesson12: Lesson = {
         files: [
             {
                 name: 'pancakes',
-                content: doc(
+                content: lines(
                     'Pancakes',
                     '1 mashed banana',
                     '1 cup flour',
@@ -44,51 +44,46 @@ export const lesson12: Lesson = {
                     '1 cup of chocolate chips',
                     'Serves 4',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'groceries',
-                content: 'eggs\nflour\nbutter\nmilk\n',
-                type: FileType.Txt,
+                content: lines('eggs', 'flour', 'butter', 'milk'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'cookies',
-                content: doc(
+                content: lines(
                     'Cookies',
                     '2 cups flour',
                     '1 cup butter',
                     '1 cup sugar',
                     '1 cup of chocolate chips',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'soup',
-                content: doc(
+                content: lines(
                     'Soup',
                     '3 potatoes',
                     '1 onion',
                     '4 cups of water',
                     '1 handful of croutons',
                 ),
-                type: FileType.Doc,
                 modifiedOn: '2026-10-02',
                 status: FileStatus.Unchanged,
                 staged: false,
             },
             {
                 name: 'notes',
-                content: 'The pancakes are from a box mix.\nBuy more box mix.\n',
-                type: FileType.Txt,
+                content: lines('The pancakes are from a box mix.', 'Buy more box mix.'),
                 modifiedOn: '2026-10-02',
                 status: FileStatus.New,
                 staged: false,
@@ -218,7 +213,7 @@ export const lesson12: Lesson = {
             files: [
                 {
                     name: 'pancakes',
-                    content: doc(
+                    content: lines(
                         'Pancakes',
                         '1 mashed banana',
                         '1 cup flour',
@@ -229,43 +224,39 @@ export const lesson12: Lesson = {
                         '1 cup of chocolate chips',
                         'Serves 4',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'groceries',
-                    content: 'eggs\nflour\nbutter\nmilk\n',
-                    type: FileType.Txt,
+                    content: lines('eggs', 'flour', 'butter', 'milk'),
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'cookies',
-                    content: doc(
+                    content: lines(
                         'Cookies',
                         '2 cups flour',
                         '1 cup butter',
                         '1 cup sugar',
                         '1 cup of chocolate chips',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
                 },
                 {
                     name: 'soup',
-                    content: doc(
+                    content: lines(
                         'Soup',
                         '3 potatoes',
                         '1 onion',
                         '4 cups of water',
                         '1 handful of croutons',
                     ),
-                    type: FileType.Doc,
                     modifiedOn: '2026-10-02',
                     status: FileStatus.Unchanged,
                     staged: false,
@@ -418,7 +409,7 @@ export const lesson12: Lesson = {
             body: [
                 {
                     type: TextType.Paragraph,
-                    text: 'Back to the recipe book, where notes.txt still holds the box mix secret. One wrong click and the whole family finds out.',
+                    text: 'Back to the recipe book, where the notes file still holds the box mix secret. One wrong click and the whole family finds out.',
                 },
                 {
                     type: TextType.Paragraph,
@@ -429,10 +420,10 @@ export const lesson12: Lesson = {
                     text: 'Git keeps the list of ignored files in a file called .gitignore. Teams use it for passwords, personal settings, and the junk files that apps leave behind.',
                 },
             ],
-            task: 'Press Ignore on notes.txt.',
-            done: "notes.txt turned grey, and Stage won't work on it anymore. The box mix secret is safe for good.",
-            // Check. notes.txt shows Ignored and can't be staged.
-            actions: [{ type: 'ignore', file: 'notes' }],
+            task: 'Press Ignore on the notes file.',
+            done: "The notes file turned grey, and Stage won't work on it anymore. The box mix secret is safe for good.",
+            // Check. notes shows Ignored and can't be staged.
+            actions: [{ type: ActionType.Ignore, file: 'notes' }],
         },
         {
             id: '12.2',
@@ -450,7 +441,7 @@ export const lesson12: Lesson = {
             task: 'Click your latest snapshot, press New tag, and name it Summer edition.',
             done: 'Summer edition sits on your latest snapshot. A branch moves forward every time you commit, but a tag never moves.',
             // Check. The Summer edition tag shows on your latest snapshot.
-            actions: [{ type: 'newTag', name: 'Summer edition' }],
+            actions: [{ type: ActionType.NewTag, name: 'Summer edition' }],
         },
         {
             id: '12.3',
@@ -468,7 +459,7 @@ export const lesson12: Lesson = {
             task: 'Press Push.',
             done: 'Origin shows a Summer edition release. Your family can grab this version of the recipe book, even after you add 40 more recipes.',
             // Check. Origin shows a Summer edition release.
-            actions: [{ type: 'push' }],
+            actions: [{ type: ActionType.Push }],
         },
         {
             id: '12.4',
@@ -486,7 +477,7 @@ export const lesson12: Lesson = {
             task: 'Click each Git word, then click what it means in plain words.',
             done: "All 8 match. You can now explain Git to a friend. Honestly, that's more than a lot of people who use Git every day can do.",
             // Check. All 8 pairs match. The words are repository, commit, stage, push, pull, branch, merge, and pull request.
-            actions: [{ type: 'matchWords' }],
+            actions: [{ type: ActionType.MatchWords }],
         },
     ],
 };

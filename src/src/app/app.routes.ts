@@ -7,6 +7,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/lessons/lessons').then((m) => m.Lessons),
     },
     {
+        path: 'lessons/:id',
+        loadComponent: () => import('./pages/lesson/lesson').then((m) => m.LessonPage),
+    },
+    {
         path: 'glossary',
         loadComponent: () => import('./pages/glossary/glossary').then((m) => m.Glossary),
     },

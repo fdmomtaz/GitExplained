@@ -9,7 +9,7 @@ Project context is in README.md. Read it first. Maintainers may keep private lin
 Mostly a writing project. The main work is lesson text, which ships inside the website app in `src/`.
 
 - The lessons live in `src/src/app/content/lessons/lesson-NN.ts`, listed in `index.ts`. These TS files are the source of truth for the lesson text, the starting workspace, and each step's actions. Lessons get reviewed in the running app, not in the files.
-- Write Doc file content with the `doc(title, ...lines)` helper from `src/src/app/content/doc.ts`, not raw HTML.
+- Every file is plain text with no extension. Write file content with the `lines(...text)` helper from `src/src/app/content/lines.ts`, one argument per line. In lesson text, call files by name with no extension, like "the pancakes file" or "name it cookies".
 - `lessons.spec.ts` next to the lessons checks the writing rules and each step's shape. Run `npx ng test --watch=false` from `src/` after editing a lesson.
 - `docs/study-plan.md` is the original outline of the curriculum. It's out of date, so don't edit it or treat it as current.
 
@@ -63,7 +63,7 @@ Fun, not boring. The course wants jokes and funny moments, like the done message
 
 - Open from something the learner has done, then show how Git fixes it.
 - Vary the shape of steps. Some bodies are one short line, some are two paragraphs. Don't let every step read the same way.
-- Use the running gags. The box mix secret in notes.txt (lessons 3 and 12), the salt incident (lesson 4), Sam who loves soup and can't spell (lesson 6 on), the milk wars (lesson 9), and hungry Alex (lesson 11).
+- Use the running gags. The box mix secret in the notes file (lessons 3 and 12), the salt incident (lesson 4), Sam who loves soup and can't spell (lesson 6 on), the milk wars (lesson 9), and hungry Alex (lesson 11).
 - Done messages add meaning or a joke. They never just repeat what the screen shows.
 - Sentences that follow each other should connect. Read each step aloud and cut anything that sounds robotic.
 

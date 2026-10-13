@@ -1,0 +1,88 @@
+<div class="flex flex-col gap-4 rounded-md bg-surface-100 p-6">
+    @if (ws().origin; as origin) {
+        <section class="flex flex-col gap-4 rounded-md bg-surface-0 p-6">
+            <div class="flex items-baseline gap-3">
+                <h3 class="text-2xl font-semibold">{{ origin.label }}</h3>
+                <span class="text-sm text-muted-color">On GitHub · the shared copy</span>
+            </div>
+            <div class="grid items-start gap-10 md:grid-cols-2">
+                <div class="flex flex-col gap-1">
+                    <div class="flex min-h-9 items-center justify-between gap-3">
+                        <h6 class="text-sm font-semibold text-muted-color">Files</h6>
+                    </div>
+                    <app-file-list [files]="origin.files" />
+                </div>
+                <div class="flex flex-col gap-1">
+                    <div class="flex min-h-9 items-center justify-between gap-3">
+                        <h6 class="text-sm font-semibold text-muted-color">History</h6>
+                    </div>
+                    <app-history-list [snapshots]="origin.history" />
+                </div>
+            </div>
+        </section>
+        <div class="flex items-center gap-3 px-6">
+            <app-action-button [type]="ActionType.Push" />
+            <span class="text-sm text-muted-color">
+                @if (ahead() > 0) {
+                    {{ ahead() }} {{ ahead() === 1 ? 'snapshot is' : 'snapshots are' }} in your
+                    local history but not on origin yet.
+                } @else {
+                    Everything is in sync.
+                }
+            </span>
+        </div>
+    } @else if (ws().config.showOrigin) {
+        <div class="px-6">
+            <app-action-button [type]="ActionType.Connect" />
+        </div>
+    }
+
+    <section class="flex flex-col gap-4 rounded-md bg-surface-0 p-6">
+        <div class="flex items-center justify-between gap-3">
+            <div class="flex items-baseline gap-3">
+                <h3 class="text-2xl font-semibold">Your folder</h3>
+                <span class="text-sm text-muted-color">
+                    {{
+                        ws().history ? 'A repository, tracked by Git' : 'A plain folder, no Git yet'
+                    }}
+                </span>
+            </div>
+            @if (!ws().history) {
+                <app-action-button [type]="ActionType.StartTracking" />
+            }
+        </div>
+        <div class="grid items-start gap-10" [class]="ws().history ? 'md:grid-cols-2' : ''">
+            <div class="flex flex-col gap-1">
+                @if (staging()) {
+                    <div class="flex min-h-9 items-center justify-between gap-3">
+                        <h6 class="text-sm font-semibold text-muted-color">Staging area</h6>
+                        <app-action-button [type]="ActionType.Commit" />
+                    </div>
+                    <app-file-list
+                        [files]="staged()"
+                        emptyMessage="Nothing staged"
+                        [types]="[ActionType.Unstage]"
+                    />
+                }
+                <div class="flex min-h-9 items-center justify-between gap-3">
+                    <h6 class="text-sm font-semibold text-muted-color">Working files</h6>
+                    <app-new-file />
+                </div>
+                <app-file-list [files]="working()" [types]="workingTypes()" />
+            </div>
+            @if (ws().history; as history) {
+                <div class="flex flex-col gap-1">
+                    <div class="flex min-h-9 items-center justify-between gap-3">
+                        <h6 class="text-sm font-semibold text-muted-color">Local history</h6>
+                        @if (!staging()) {
+                            <app-action-button [type]="ActionType.Commit" />
+                        }
+                    </div>
+                    <app-history-list [snapshots]="history" />
+                </div>
+            }
+        </div>
+    </section>
+</div>
+
+<app-icon-legend class="block px-6 pt-6" [names]="legend()" />

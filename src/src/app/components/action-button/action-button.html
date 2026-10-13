@@ -1,0 +1,10 @@
+<button
+    pButton
+    type="button"
+    size="small"
+    [label]="label()"
+    [severity]="player.canPress(type()) ? undefined : 'secondary'"
+    [disabled]="!player.canPress(type())"
+    [class.animate-glow]="player.asks(type())"
+    (click)="player.press(type())"
+></button>

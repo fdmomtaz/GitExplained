@@ -1,8 +1,19 @@
+import { Remote } from '../enums/remote';
+import { WorkspaceEventType } from '../enums/workspace-event-type';
 import { Snapshot } from './snapshot';
 import { WorkspaceFile } from './workspace-file';
 
 /** Something another person does once a step is done, like Sam pushing to origin. */
 export type WorkspaceEvent =
-    | { type: 'push'; target: 'origin' | 'upstream'; snapshot: Snapshot; files: WorkspaceFile[] }
-    | { type: 'comment' | 'approve'; author: string; text: string } // on the open pull request
-    | { type: 'mergePullRequest'; author: string; target: 'origin' | 'upstream' };
+    | {
+          type: WorkspaceEventType.Push;
+          target: Remote;
+          snapshot: Snapshot;
+          files: WorkspaceFile[];
+      }
+    | {
+          type: WorkspaceEventType.Comment | WorkspaceEventType.Approve;
+          author: string;
+          text: string;
+      }
+    | { type: WorkspaceEventType.MergePullRequest; author: string; target: Remote };

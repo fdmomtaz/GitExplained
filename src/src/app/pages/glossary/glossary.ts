@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PlateNumber } from '../../components/plate-number/plate-number';
 import { LessonService } from '../../services/lesson.service';
 
 @Component({
     selector: 'app-glossary',
-    imports: [RouterLink],
+    imports: [RouterLink, PlateNumber],
     templateUrl: './glossary.html',
 })
 export class Glossary {

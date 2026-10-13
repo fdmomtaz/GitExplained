@@ -1,0 +1,43 @@
+<button
+    pButton
+    type="button"
+    size="small"
+    label="New file"
+    (click)="open($event, popover)"
+></button>
+
+<p-popover #popover (onShow)="field.focus()">
+    <form
+        class="flex w-72 flex-col gap-3"
+        (submit)="create() && popover.hide(); $event.preventDefault()"
+    >
+        <div class="flex flex-col gap-1">
+            <label class="text-sm font-semibold" for="new-file-name">Name</label>
+            <input
+                #field
+                id="new-file-name"
+                pInputText
+                pSize="small"
+                autocomplete="off"
+                placeholder="recipe"
+                [invalid]="taken()"
+                [value]="name()"
+                (input)="name.set(field.value)"
+            />
+            @if (taken()) {
+                <span class="text-sm text-red-600">
+                    There's already a file called {{ trimmed() }}.
+                </span>
+            }
+        </div>
+        <div class="flex justify-end gap-2">
+            <p-button label="Cancel" [text]="true" size="small" (onClick)="popover.hide()" />
+            <p-button
+                type="submit"
+                label="Create"
+                size="small"
+                [disabled]="!trimmed() || taken()"
+            />
+        </div>
+    </form>
+</p-popover>

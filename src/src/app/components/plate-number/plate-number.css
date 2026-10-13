@@ -1,8 +1,7 @@
-/* The plate numeral from the Broadsheet design system: the number printed as three
-   process plates a little out of register. Copied from design/_ds/broadsheet.../styles.css. */
+/* The plate print from the Broadsheet design system: text printed as three process plates
+   a little out of register. Numbers use the full offsets. Headlines use half, because the
+   serif's thin strokes vanish under the full ones. */
 .cmyk-num {
-    --magenta: #d6006c;
-    --process-yellow: #edbb00;
     position: relative;
     width: fit-content;
     line-height: 0.9;
@@ -16,20 +15,47 @@
         0.036em 0.025em 0 var(--p-surface-0),
         -0.031em -0.023em 0 var(--p-surface-0);
 }
-.cmyk-num .plate {
-    position: absolute;
-    inset: 0.12em;
-    mix-blend-mode: multiply;
-    text-box: trim-both cap alphabetic;
-}
-.cmyk-num .plate-c {
-    color: var(--p-primary-color);
-}
 .cmyk-num .plate-m {
-    color: var(--magenta);
     translate: 0.036em 0.025em;
 }
 .cmyk-num .plate-y {
-    color: var(--process-yellow);
     translate: -0.031em -0.023em;
+}
+.cmyk-head {
+    position: relative;
+    display: inline-block;
+}
+.cmyk-head .paper {
+    color: var(--p-surface-0);
+    text-shadow:
+        0.018em 0.0125em 0 var(--p-surface-0),
+        -0.0155em -0.0115em 0 var(--p-surface-0);
+}
+.cmyk-head .plate-m {
+    translate: 0.018em 0.0125em;
+}
+.cmyk-head .plate-y {
+    translate: -0.0155em -0.0115em;
+}
+.plate {
+    position: absolute;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    user-select: none;
+    text-box: trim-both cap alphabetic;
+}
+.cmyk-num .plate {
+    inset: 0.12em;
+}
+.cmyk-head .plate {
+    inset: 0;
+}
+.plate-c {
+    color: var(--p-primary-color);
+}
+.plate-m {
+    color: #d6006c;
+}
+.plate-y {
+    color: #edbb00;
 }
