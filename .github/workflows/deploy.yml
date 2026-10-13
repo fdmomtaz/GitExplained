@@ -5,6 +5,13 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      deploy:
+        # Pushes to main always deploy. Tick this to deploy another branch by hand.
+        # That branch must also be allowed under Settings > Environments > github-pages.
+        description: Deploy this branch to GitHub Pages
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -45,8 +52,14 @@ jobs:
           path: src/dist/git-explained/browser
 
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && inputs.deploy)
     needs: build
+    # One Pages site, so deploys from different branches wait their turn.
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
       pages: write
